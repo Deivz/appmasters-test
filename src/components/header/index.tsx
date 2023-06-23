@@ -1,19 +1,10 @@
-import { useState } from 'react';
-// import NavBar from '../navBar';
 import SearchBar from '../searchBar';
 import styles from './header.module.css';
 import logo from '../../assets/img/logo-temp-sec.png';
 import { Link } from 'react-router-dom';
-import MenuButton from '../menuButton';
+import NavBar from '../navBar';
 
 export default function Header() {
-
-  const [isActive, setIsActive] = useState<boolean>(false);
-
-  function ToggleMode(): void {
-    setIsActive(!isActive);
-  }
-
   return (
     <section className={styles.secao}>
       <header className={styles.header}>
@@ -23,7 +14,9 @@ export default function Header() {
           </Link>
         </h1>
         <SearchBar />
-        <MenuButton isActive={isActive} event={ToggleMode} />
+        <div className={styles.navBar}>
+          <NavBar />
+        </div>
       </header>
     </section>
   )

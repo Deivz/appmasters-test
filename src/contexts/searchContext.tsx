@@ -20,7 +20,7 @@ export default function SearchContextProvider({ children }: SearchContextProps) 
 
    function find(evento: FormEvent) {
       evento.preventDefault();
-      navigate('/produtos');
+      navigate('/games');
    }
 
    return (

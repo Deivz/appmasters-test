@@ -1,6 +1,8 @@
 import styles from './games.module.css';
 import { useQuery } from 'react-query';
 import Card from '../../components/card';
+import { useContext } from 'react';
+import { SearchContext } from '../../contexts/searchContext';
 
 interface GameData {
   id: string;
@@ -17,6 +19,8 @@ interface GameData {
 };
 
 export default function Games() {
+
+  const { search } = useContext(SearchContext);
 
   const { data, error, isLoading } = useQuery<Array<GameData>>('data', () => {
     return fetch('https://games-test-api-81e9fb0d564a.herokuapp.com/api/data/', {
@@ -60,8 +64,20 @@ export default function Games() {
   }
 
   return (
-    <div className={styles.container}>
-      {data.map((game: GameData) => <Card gameInfo={game} />)}
-    </div>
+    <section className={styles.secao}>
+      <div className={styles.container}>
+        {
+          (search === undefined )
+            ?
+            data.map((game: GameData) => <Card gameInfo={game} />)
+            :
+            data.map((game: GameData) => {
+              if (game.title.toUpperCase().includes(search.toUpperCase())) {
+                return <Card gameInfo={game} />
+              }
+            })
+        }
+      </div>
+    </section>
   )
 }
