@@ -3,6 +3,7 @@ import { useQuery } from 'react-query';
 import Card from '../../components/card';
 import { useContext } from 'react';
 import { SearchContext } from '../../contexts/searchContext';
+import ProgressBar from '../../components/progressBar';
 
 interface GameData {
   id: string;
@@ -52,11 +53,15 @@ export default function Games() {
   });
 
   if (isLoading) {
-    return <div>Carregando...</div>;
+    return (
+      <div className={styles.container}>
+        <ProgressBar />
+      </div>
+    );
   }
 
   if (error) {
-    return <div>Algo deu errado</div>;
+    return <div className={styles.container}>Algo deu errado</div>;
   }
 
   if (!data) {
@@ -64,16 +69,16 @@ export default function Games() {
   }
 
   return (
-    <section className={styles.secao}>
+    <section className={styles.section}>
       <div className={styles.container}>
         {
           (search === undefined )
             ?
-            data.map((game: GameData) => <Card gameInfo={game} />)
+            data.map((game: GameData) => <Card gameInfo={game} key={game.id}/>)
             :
             data.map((game: GameData) => {
               if (game.title.toUpperCase().includes(search.toUpperCase())) {
-                return <Card gameInfo={game} />
+                return <Card gameInfo={game} key={game.id}/>
               }
             })
         }
