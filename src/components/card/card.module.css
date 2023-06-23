@@ -1,0 +1,23 @@
+.container + .container{
+   margin-top: 2rem;
+}
+
+.card {
+   background-color: lightgray;
+   max-width: 25rem;
+   width: 96%;
+}
+
+.card + .card{
+   margin-top: 2rem;
+}
+
+.img {
+   border: solid 2px black;
+   border-radius: 15px;
+   width: 100%;
+}
+
+.title {
+   text-align: center;
+}

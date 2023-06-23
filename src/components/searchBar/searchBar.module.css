@@ -1,0 +1,22 @@
+.magnifier {
+  cursor: pointer;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.searchField {
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  height: 100%;
+  padding: .5rem 1rem;
+  width: 96%;
+}
+
+.magnifierIcon {
+  margin-left: -2rem;
+  margin-top: 0.125rem;
+  opacity: .9;
+  position: absolute;
+}

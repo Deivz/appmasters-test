@@ -1,0 +1,13 @@
+.header {
+   align-items: center;
+   display: flex;
+   height: 5rem;
+   justify-content: space-between;
+   margin: 0 auto;
+   max-width: 87.5rem;
+   width: 96%;
+}
+
+.logo{
+   width: 6rem;
+}
