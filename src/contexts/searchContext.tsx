@@ -6,9 +6,9 @@ interface SearchContextProps {
 }
 
 interface SearchContextType {
+   find: (event: FormEvent) => void;
    search: string | undefined;
    setSearch: (value: string | undefined) => void;
-   find: (event: FormEvent) => void;
 }
 
 export const SearchContext = createContext<SearchContextType>({} as SearchContextType);
@@ -24,7 +24,7 @@ export default function SearchContextProvider({ children }: SearchContextProps) 
    }
 
    return (
-      <SearchContext.Provider value={{ search, find, setSearch }}>
+      <SearchContext.Provider value={{ find, search, setSearch }}>
          {children}
       </SearchContext.Provider>
    );

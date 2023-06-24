@@ -12,6 +12,10 @@
    width: 100%;
 }
 
+.img:hover{
+   border: solid .125rem red;
+}
+
 .title {
    padding: .75rem;
 }

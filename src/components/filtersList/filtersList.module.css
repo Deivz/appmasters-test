@@ -1,0 +1,32 @@
+.filterActive .navigation{
+  overflow: scroll;
+  right: 0;
+}
+
+.navigation{
+  background-color: rgba(192, 7, 7, .9);
+  height: 100vh;
+  position: absolute;
+  right: -90%;
+  top: 0;
+  transition: ease-in-out .2s;
+}
+
+.close{
+  font-size: 2rem;
+  left: .8rem;
+  position: relative;
+  text-align: center;
+  top: 1rem;
+}
+
+.list{
+  list-style: none;
+  padding-top: 4rem;
+}
+
+.item{
+  border-bottom: 1px solid #1a0c57;
+  margin: 0 1rem;
+  padding-top: 2rem;
+}
