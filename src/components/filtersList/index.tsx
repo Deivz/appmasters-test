@@ -19,7 +19,7 @@ const FiltersList = memo(function FilterList({ list, onClick }: FiltersListProps
         {list.map((genre: GenreData) => {
           return (
             <li className={styles.item} key={genre.id}>
-              <span onClick={(event) => event.target.innerText === 'Mostrar Todos' ? setSearch('') : setSearch(event.target.innerText)}>
+              <span onClick={() => genre.title === 'Mostrar Todos' ? setSearch('') : setSearch(genre.title)}>
                 {genre.title}
               </span>
             </li>
