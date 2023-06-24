@@ -24,7 +24,7 @@ export default function ProgressBar() {
               transition: "width 0.3s",
               width: `${filled}%`
             }}></div>
-            <span className={styles.progressPercent}>{filled}%</span>
+            <span className={styles.progressPercent}>{filled > 100 ? 100 : filled}%</span>
           </div>
         </div>
       </div>
