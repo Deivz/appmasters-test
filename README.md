@@ -38,6 +38,10 @@ Receber uma API e através dela entregar ao menos 8 dos requisitos abaixo:
 ### `React`
 Um dos requisitos para o teste técnico era escolher entre React e Next, apesar de trabalhar também com Next, sou mais produtivo em React, esse foi o motivo da minha escolha dentre as duas.
 
+### `TypeScript`
+Por questão de produtividade e segurança durante o prócesso de desenvolvimento da aplicação, optei por TypeScript à JavaScript.
+Ser avisado dos erros e possíveis erros antes de rodar o código é sempre vantajoso, tanto por questão de segurança quanto pela já mencionada produtividade.
+
 ### `CSS puro`
 Como a implementação do estilo era relativamente simples optei por não utilizar de nenhum framework ou pré-processador.
 
@@ -53,8 +57,11 @@ Ferramenta de fácil utilização e amplamente utilizada na comunidade, a escolh
 
 
 ## Pontos de melhoria
-### Multifiltros, busca em cima dos filtros, paginação e exibição dos itens
-Como foi solicitado somente um filtro por gênero simples, optei por fazê-lo assim a fim de produtividade. A busca também não busca diretamente nos filtros, e sim no conteúdo como um todo.
+### Multifiltros, busca em dentre os itens filtrados, botão de limpar busca, paginação e exibição dos itens
+Como foi solicitado somente um filtro por gênero simples, optei por fazê-lo assim a fim de produtividade.
+
+A busca também não busca diretamente nos filtros, e sim no conteúdo como um todo. Tratando ainda da busca, uma implementação de um botão de limpar o campo de busca
+agregaria muito na experiência do usuário.
 
 Outro ponto relevante é a páginação. A não implementação foi uma escolha por questão de tempo hábil, mas é um quesito extremamente necessário, tanto pela questão da experiência do usuário quanto
 por questão de desempenho do sistema.
