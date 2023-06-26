@@ -13,7 +13,7 @@
 }
 
 .img:hover{
-   border: solid .125rem red;
+   border: solid .2rem rgba(204, 54, 154, 0.904);
 }
 
 .title {

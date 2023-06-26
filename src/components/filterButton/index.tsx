@@ -12,8 +12,8 @@ export default function FilterButton({ isActive, event }: FilterButtonProps) {
     <div className={styles.button}>
       <div className={isActive ? `${styles.change}` : ``} onClick={event}>
         <div className={styles.container}>
-          <span style={{ fontSize: '1.5rem' }}><MdTune /></span>
-          <span>Filtros</span>
+          <span style={{ fontSize: '1.3rem'}}><MdTune /></span>
+          <span className={styles.text}>Filtros</span>
         </div>
       </div>
     </div>

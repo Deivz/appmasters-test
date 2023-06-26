@@ -43,7 +43,7 @@ export default function Games() {
   }
 
   const filterByGenre = (games: Array<GameData>): Array<GenreData> => {
-    const genres: Array<GenreData> = [{id: 'todos', title: 'Mostrar Todos'}];
+    const genres: Array<GenreData> = [{ id: 'todos', title: 'Mostrar Todos' }];
 
     for (let game of games) {
       const hasGenre = genres.find((genre) => genre.title === game.genre);
@@ -87,7 +87,7 @@ export default function Games() {
   }, {
     retry: false,
     staleTime: Infinity,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
     refetchOnReconnect: false,
     refetchIntervalInBackground: false,
     refetchInterval: false
@@ -118,18 +118,16 @@ export default function Games() {
   }
 
   return (
-    <section className={styles.section}>
+    <section className={isActive ? `${filterStyles.filterActive} ${styles.section}` : styles.section}>
       <div className={styles.filter}>
         <FilterButton event={toggleMode} isActive={isActive} />
       </div>
       {
-        data && 
-          (
-            <div className={isActive ? filterStyles.filterActive : '' }>
-              <FiltersList list={filterByGenre(data)} onClick={toggleMode} />
-            </div>
-          )
-        }
+        data &&
+        (
+          <FiltersList list={filterByGenre(data)} onClick={toggleMode} />
+        )
+      }
       <div className={styles.container}>
         {
           (search === undefined)

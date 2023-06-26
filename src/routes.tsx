@@ -12,7 +12,6 @@ export default function AppRouter() {
   return (
     <Router>
       <QueryClientProvider client={queryClient}>
-
         <SearchContextProvider>
           <Routes>
             <Route path='/' element={<DefaultPage />}>

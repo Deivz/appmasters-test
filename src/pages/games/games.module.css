@@ -27,3 +27,20 @@
     gap: 2.5rem;
   }
 }
+
+@media(min-width: 81.25rem){
+  .section{
+    display: flex;
+    margin: 0 auto;
+    max-width: 87.5rem;
+    width: 96%;
+  }
+
+  .filter{
+    display: none;
+  }
+
+  .container{
+    padding-left: 2rem;
+  }
+}
