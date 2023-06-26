@@ -6,6 +6,17 @@
 
 Repositório criado para o teste técnico a ser realizado para vaga de Estagiário Front-End na empresa App Masters.
 
+Como a API fornecida consiste numa temática de jogos, optei por fazer o layout da página utilizando uma roupagem mais retrô, que remete aos jogos antigos (como os do atari) e aos arcades de antigamente.
+A escolha desta linha para o design da página se deu por conta do meu apreço e sentimento de nostalgia que este tema me traz. Também é um tipo de estética que gosto bastante.
+
+Seguem abaixo algumas imagens para ilustrar como ficou.
+
+### Layout da página em desktop
+<img src="https://github.com/Deivz/appmasters-test/assets/78604613/2672f926-caf1-4511-ad92-adc3a77448d7" alt="Imagem do projeto rodando em um browser desktop" />
+
+### Layout da página em dispositivos mobile
+<img src="https://github.com/Deivz/appmasters-test/assets/78604613/9bc957cc-0044-4858-bd84-d8db9041f3c0" alt="Imagem do projeto rodando em um browser mobile" />
+
 ## No que consiste o teste
 
 Receber uma API e através dela entregar ao menos 8 dos requisitos abaixo:
