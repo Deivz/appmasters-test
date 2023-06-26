@@ -53,13 +53,16 @@ Ferramenta de fácil utilização e amplamente utilizada na comunidade, a escolh
 
 
 ## Pontos de melhoria
-### Multifiltros, busca em cima dos filtros e paginação
+### Multifiltros, busca em cima dos filtros, paginação e exibição dos itens
 Como foi solicitado somente um filtro por gênero simples, optei por fazê-lo assim a fim de produtividade. A busca também não busca diretamente nos filtros, e sim no conteúdo como um todo.
 
 Outro ponto relevante é a páginação. A não implementação foi uma escolha por questão de tempo hábil, mas é um quesito extremamente necessário, tanto pela questão da experiência do usuário quanto
 por questão de desempenho do sistema.
 
-Como pontos de melhoria para implementações futura ficam estes três pontos destacados.
+A ausência da apresentação dos jogos em uma página ao serem clickados foi uma estratégia por questão de tempo também. Como não fazia parte dos requisitos iniciais optei por não entregar nesta etapa, mas
+por se tratar de um item "core" para à aplicação, esta também se faz necessárias em etapas futuras.
+
+Como pontos de melhoria para implementações futura ficam estes quatro pontos destacados.
 
 ## Desafios, dificuldades e superação
 Por se tratar de um projeto simples, a maior dificuldade foi a utilização da biblioteca React-Query. Tive que aprender a utilizá-la, e a partir de hoje só trabalharei com ela.
