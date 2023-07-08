@@ -1,22 +1,19 @@
-import styles from './navBar.module.css';
-import { Link, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import { NavBarContainer } from './NavBar.styles';
 
 
 export default function NavBar() {
-  
-  const {pathname} = useLocation();
-
   return (
-    <ul className={styles.navbar}>
-      <li className={`${styles.item} ${pathname === '/home' ? styles.active : ''}`}>
-        <Link to='/home'>Home</Link>
+    <NavBarContainer>
+      <li>
+        <NavLink to='/home'>Home</NavLink>
       </li>
-      <li className={`${styles.item} ${pathname === '/' ? styles.active : ''}`}>
-        <Link to='/'>Games</Link>
+      <li>
+        <NavLink to='/'>Games</NavLink>
       </li>
-      <li className={`${styles.item} ${pathname === '/consoles' ? styles.active : ''}`}>
-        <Link to='/consoles'>Consoles</Link>
+      <li>
+        <NavLink to='/consoles'>Consoles</NavLink>
       </li>
-    </ul>
+    </NavBarContainer>
   );
 }

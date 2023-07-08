@@ -1,4 +1,4 @@
-import styles from './messenger.module.css'; 
+import { MessengerContainer } from './Messenger.styles';
 
 interface MessengerProps {
   message: string;
@@ -6,6 +6,8 @@ interface MessengerProps {
 
 export default function Messenger({message}: MessengerProps) {
   return (
-    <span className={styles.messenger}>{message}</span>
+    <MessengerContainer>
+      {message}
+    </MessengerContainer>
   )
 }

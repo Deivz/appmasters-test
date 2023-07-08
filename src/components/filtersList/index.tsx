@@ -1,32 +1,35 @@
 import { memo, MouseEventHandler, useContext } from 'react';
 import { GenreData } from '../../pages/games';
-import styles from './filtersList.module.css'
 import { SearchContext } from '../../contexts/searchContext';
+import { FilterListContainer } from './FilterList.styles';
 
 interface FiltersListProps {
+  active: boolean;
   list: Array<GenreData>;
   onClick: MouseEventHandler<HTMLDivElement>;
 }
 
-const FiltersList = memo(function FilterList({ list, onClick }: FiltersListProps) {
+const FiltersList = memo(function FilterList({ active, list, onClick }: FiltersListProps) {
 
   const { find, setSearch } = useContext(SearchContext);
 
   return (
-    <form onSubmit={find} className={styles.navigation}>
-      <span className={styles.close} onClick={onClick}>X</span>
-      <ul className={styles.list}>
-        {list.map((genre: GenreData) => {
-          return (
-            <li className={styles.item} key={genre.id}>
-              <span onClick={() => genre.title === 'Mostrar Todos' ? setSearch('') : setSearch(genre.title)}>
-                {genre.title}
-              </span>
-            </li>
-          )
-        })}
-      </ul>
-    </form>
+    <FilterListContainer active={active}>
+      <form onSubmit={find} className={active ? 'isActive' : ''}>
+        <span onClick={onClick}>X</span>
+        <ul>
+          {list.map((genre: GenreData) => {
+            return (
+              <li key={genre.id}>
+                <span onClick={() => genre.title === 'Mostrar Todos' ? setSearch('') : setSearch(genre.title)}>
+                  {genre.title}
+                </span>
+              </li>
+            )
+          })}
+        </ul>
+      </form>
+    </FilterListContainer>
   )
 });
 

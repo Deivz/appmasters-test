@@ -1,5 +1,3 @@
-import styles from './games.module.css';
-import filterStyles from '../../components/filtersList/filtersList.module.css';
 import { useQuery } from 'react-query';
 import Card from '../../components/card';
 import { useContext, useState } from 'react';
@@ -8,6 +6,7 @@ import ProgressBar from '../../components/progressBar';
 import Messenger from '../../components/messenger';
 import FiltersList from '../../components/filtersList';
 import FilterButton from '../../components/filterButton';
+import { GamesContainer } from './Games.styles';
 
 interface GameData {
   id: string;
@@ -33,13 +32,13 @@ export default function Games() {
   const { search } = useContext(SearchContext);
 
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const [isActive, setIsActive] = useState(false);
+  const [active, setActive] = useState(false);
 
   const controller = new AbortController();
   const signal = controller.signal;
 
   const toggleMode = (): void => {
-    setIsActive(!isActive);
+    setActive(!active);
   }
 
   const filterByGenre = (games: Array<GameData>): Array<GenreData> => {
@@ -95,56 +94,88 @@ export default function Games() {
 
   if (isLoading) {
     return (
-      <div className={styles.container}>
+      <GamesContainer>
         <ProgressBar />
-      </div>
+      </GamesContainer>
     );
   }
 
   if (errorMessage) {
     return (
-      <div className={styles.container}>
+      <GamesContainer>
         <Messenger message={errorMessage} />
-      </div>
+      </GamesContainer>
     );
   }
 
   if (error) {
     return (
-      <div className={styles.container}>
+      <GamesContainer>
         <Messenger message='O servidor não conseguirá responder por agora, tente voltar novamente mais tarde' />
-      </div>
+      </GamesContainer>
     );
   }
 
   return (
-    <section className={isActive ? `${filterStyles.filterActive} ${styles.section}` : styles.section}>
-      <div className={styles.filter}>
-        <FilterButton event={toggleMode} isActive={isActive} />
-      </div>
-      {
-        data &&
-        (
-          <FiltersList list={filterByGenre(data)} onClick={toggleMode} />
-        )
-      }
-      <div className={styles.container}>
-        {
-          (search === undefined)
-            ?
-            data?.map((game: GameData) => <Card gameInfo={game} key={game.id} />)
-            :
-            data?.map((game: GameData) => {
-              if (
-                game.title.toUpperCase().includes(search.toUpperCase())
-                || game.genre.toUpperCase().includes(search.toUpperCase())
-              ) {
-                return <Card gameInfo={game} key={game.id} />
-              }
-            })
-        }
-      </div>
+    <section>
+      <GamesContainer>
+        <div className='filter'>
+          <FilterButton event={toggleMode} />
+        </div>
+        <div className='menu'>
+          {
+            data &&
+            (
+              <FiltersList list={filterByGenre(data)} onClick={toggleMode} active={active} />
+            )
+          }
+        </div>
+        <div className='content'>
+          {
+            (search === undefined)
+              ?
+              data?.map((game: GameData) => <Card gameInfo={game} key={game.id} />)
+              :
+              data?.map((game: GameData) => {
+                if (
+                  game.title.toUpperCase().includes(search.toUpperCase())
+                  || game.genre.toUpperCase().includes(search.toUpperCase())
+                ) {
+                  return <Card gameInfo={game} key={game.id} />
+                }
+              })
+          }
+        </div>
+      </GamesContainer>
     </section>
   )
-
+  // return (
+  //   <section className={styles.section}>
+  //     <div className={styles.filter}>
+  //       <FilterButton event={toggleMode} />
+  //     </div>
+  //     {
+  //       data &&
+  //       (
+  //         <FiltersList list={filterByGenre(data)} onClick={toggleMode} active={active} />
+  //       )
+  //     }
+  //     <div className={styles.container}>
+  //       {
+  //         (search === undefined)
+  //           ?
+  //           data?.map((game: GameData) => <Card gameInfo={game} key={game.id} />)
+  //           :
+  //           data?.map((game: GameData) => {
+  //             if (
+  //               game.title.toUpperCase().includes(search.toUpperCase())
+  //               || game.genre.toUpperCase().includes(search.toUpperCase())
+  //             ) {
+  //               return <Card gameInfo={game} key={game.id} />
+  //             }
+  //           })
+  //       }
+  //     </div>
+  //   </section>
+  // )
 }

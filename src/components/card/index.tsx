@@ -1,4 +1,4 @@
-import styles from './card.module.css';
+import { CardContainer } from './Card.styles';
 
 interface Info {
   gameInfo: CardProps
@@ -13,14 +13,12 @@ interface CardProps {
 
 export default function Card({ gameInfo }: Info) {
   return (
-    <div className={styles.container}>
-      <div className={styles.container}>
-        <div className={styles.card}>
-          <img className={styles.img} src={gameInfo.thumbnail} alt={`Thumbnail do jogo ${gameInfo.title}`} />
-          <div className={styles.title}>{gameInfo.title}</div>
-          <div className={styles.genre}>{gameInfo.genre}</div>
-        </div>
+    <CardContainer>
+      <div className='card'>
+        <img src={gameInfo.thumbnail} alt={`Thumbnail do jogo ${gameInfo.title}`} />
+        <h3>{gameInfo.title}</h3>
+        <h4>{gameInfo.genre}</h4>
       </div>
-    </div>
+    </CardContainer>
   );
 }

@@ -1,21 +1,16 @@
 import { MouseEventHandler } from "react";
-import styles from "./filterButton.module.css"
 import { MdTune } from "react-icons/md";
+import { ButtonContainer } from "./FilterButton.styles";
 
 interface FilterButtonProps {
-  isActive: boolean;
   event: MouseEventHandler<HTMLDivElement>;
 }
 
-export default function FilterButton({ isActive, event }: FilterButtonProps) {
+export default function FilterButton({ event }: FilterButtonProps) {
   return (
-    <div className={styles.button}>
-      <div className={isActive ? `${styles.change}` : ``} onClick={event}>
-        <div className={styles.container}>
-          <span style={{ fontSize: '1.3rem'}}><MdTune /></span>
-          <span className={styles.text}>Filtros</span>
-        </div>
-      </div>
-    </div>
+    <ButtonContainer onClick={event}>
+      <span style={{ fontSize: '1.3rem' }}><MdTune /></span>
+      <p>Filtros</p>
+    </ButtonContainer>
   )
 }

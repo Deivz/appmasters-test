@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import styles from './progressBar.module.css';
+import { ProgressBarContainer } from './ProgressBar.styles';
 
 export default function ProgressBar() {
 
@@ -13,21 +13,16 @@ export default function ProgressBar() {
   }, [filled, isLoading])
 
   return (
-    <section className={styles.section}>
-      <div>
-        <div className={styles.pixelCorners}>Loading...</div>
-        <div className={styles.pixelCornersWrapper}>
-          <div className={styles.progressBar}>
-            <div style={{
-              backgroundColor: "red",
-              height: "100%",
-              transition: "width 0.3s",
-              width: `${filled}%`
-            }}></div>
-            <span className={styles.progressPercent}>{filled > 100 ? 100 : filled}%</span>
+    <section>
+      <ProgressBarContainer filled={filled}>
+        <h3>Loading...</h3>
+        <div className='pixelCornersWrapper'>
+          <div className='progressBar'>
+            <div className='loadingBar'></div>
+            <span className='progressPercent'>{filled > 100 ? 100 : filled}%</span>
           </div>
         </div>
-      </div>
+      </ProgressBarContainer>
     </section>
   )
 }
