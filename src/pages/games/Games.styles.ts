@@ -34,8 +34,13 @@ export const GamesContainer = styled.div`
     }
 
     .content{
-      /* padding-left: 2rem; */
       width: 80%;
     }
   }
+`
+
+export const MessagesContainer = styled.div`
+  margin: 0 auto;
+  max-width: 87.5rem;
+  width: 96%;
 `

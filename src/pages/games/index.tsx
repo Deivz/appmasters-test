@@ -6,7 +6,7 @@ import ProgressBar from '../../components/progressBar';
 import Messenger from '../../components/messenger';
 import FiltersList from '../../components/filtersList';
 import FilterButton from '../../components/filterButton';
-import { GamesContainer } from './Games.styles';
+import { GamesContainer, MessagesContainer } from './Games.styles';
 
 interface GameData {
   id: string;
@@ -94,25 +94,25 @@ export default function Games() {
 
   if (isLoading) {
     return (
-      <GamesContainer>
+      <MessagesContainer>
         <ProgressBar />
-      </GamesContainer>
+      </MessagesContainer>
     );
   }
 
   if (errorMessage) {
     return (
-      <GamesContainer>
+      <MessagesContainer>
         <Messenger message={errorMessage} />
-      </GamesContainer>
+      </MessagesContainer>
     );
   }
 
   if (error) {
     return (
-      <GamesContainer>
+      <MessagesContainer>
         <Messenger message='O servidor não conseguirá responder por agora, tente voltar novamente mais tarde' />
-      </GamesContainer>
+      </MessagesContainer>
     );
   }
 
@@ -149,33 +149,4 @@ export default function Games() {
       </GamesContainer>
     </section>
   )
-  // return (
-  //   <section className={styles.section}>
-  //     <div className={styles.filter}>
-  //       <FilterButton event={toggleMode} />
-  //     </div>
-  //     {
-  //       data &&
-  //       (
-  //         <FiltersList list={filterByGenre(data)} onClick={toggleMode} active={active} />
-  //       )
-  //     }
-  //     <div className={styles.container}>
-  //       {
-  //         (search === undefined)
-  //           ?
-  //           data?.map((game: GameData) => <Card gameInfo={game} key={game.id} />)
-  //           :
-  //           data?.map((game: GameData) => {
-  //             if (
-  //               game.title.toUpperCase().includes(search.toUpperCase())
-  //               || game.genre.toUpperCase().includes(search.toUpperCase())
-  //             ) {
-  //               return <Card gameInfo={game} key={game.id} />
-  //             }
-  //           })
-  //       }
-  //     </div>
-  //   </section>
-  // )
 }
