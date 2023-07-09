@@ -6,6 +6,8 @@ interface FavAndRatingContainerProps {
 
 export const FavAndRatingContainer = styled.span<FavAndRatingContainerProps>`
   cursor: pointer;
+  font-size: 1.5rem;
+
   svg {
     path {
       color: ${({variant}) => variant};

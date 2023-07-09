@@ -1,8 +1,9 @@
 import { BiSolidHeart } from 'react-icons/bi';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { FavAndRatingContainer } from '../../styles/FavAndRating.styles';
 
 interface RatingProps {
+  count: number;
   favoriting: number;
   color: {
     filled: string;
@@ -11,7 +12,8 @@ interface RatingProps {
   onFavoriting: (number: number) => void;
 }
 
-Favorite.defaultProps = {
+Rate.defaultProps = {
+  count: 1,
   favoriting: 0,
   color: {
     filled: "red",
@@ -19,22 +21,39 @@ Favorite.defaultProps = {
   }
 }
 
-export default function Favorite({ color, favoriting, onFavoriting }: RatingProps) {
+export default function Rate({ count, favoriting, color, onFavoriting }: RatingProps) {
 
-  const [hoverFav, setHoverFav] = useState<number>(0);
+  const [hoverFavoriting, setHoverFavoriting] = useState<number>(0);
 
-  const getColor = (): string => {
-    return hoverFav ? color.filled : color.unfilled;
+  const getColor = (index: number): string => {
+    if (hoverFavoriting >= index) {
+      return color.filled;
+    } else if (!hoverFavoriting && favoriting >= index) {
+      return color.filled;
+    }
+
+    return color.unfilled;
   }
 
+  const addFavorite = useMemo(() => {
+    return Array(count).fill(0).map((_, arrayIndex) => arrayIndex + 1).map((index) => {
+      return (
+        <FavAndRatingContainer
+          variant={getColor(index)}
+          key={index}
+          onClick={() => onFavoriting(index)}
+          onMouseEnter={() => setHoverFavoriting(index)}
+          onMouseLeave={() => setHoverFavoriting(0)}
+        >
+          <BiSolidHeart />
+        </FavAndRatingContainer>
+      );
+    })
+  }, [count, favoriting, hoverFavoriting]);
+
   return (
-    <FavAndRatingContainer
-      variant={getColor()}
-      onClick={() => onFavoriting(1)}
-      onMouseEnter={() => setHoverFav(1)}
-      onMouseLeave={() => setHoverFav(0)}
-    >
-      <BiSolidHeart />
-    </FavAndRatingContainer>
+    <div>
+      {addFavorite}
+    </div>
   )
 }

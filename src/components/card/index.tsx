@@ -17,17 +17,17 @@ interface CardProps {
 export default function Card({ gameInfo }: Info) {
 
   const [rating, setRating] = useState<number>(0);
-  const [addFavorite, setAddFavorite] = useState<number>(0);
+  const [favoriting, setFavoriting] = useState<number>(0);
 
   return (
     <CardContainer>
       <div className='card'>
-        <img src={gameInfo.thumbnail} alt={`Thumbnail do jogo ${gameInfo.title}`} />
-        <div className='info'>
-          <h3>{gameInfo.title}</h3>
-          <Favorite favoriting={addFavorite} onFavoriting={(number: number) => setAddFavorite(number)} />
+        <img className='pic' src={gameInfo.thumbnail} alt={`Thumbnail do jogo ${gameInfo.title}`} />
+        <div className='rating'>
           <Rate rating={rating} onRating={(rate: number) => setRating(rate)} />
+          <Favorite favoriting={favoriting} onFavoriting={(number: number) => setFavoriting(number)} />
         </div>
+        <h3>{gameInfo.title}</h3>
         <h4>{gameInfo.genre}</h4>
       </div>
     </CardContainer>
