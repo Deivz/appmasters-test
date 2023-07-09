@@ -2,6 +2,8 @@ import { styled } from "styled-components";
 import { device } from "../../styles/global";
 
 export const CardContainer = styled.div`
+  position: relative;
+  
   & + div {
     margin-top: 2.5rem;
   }
@@ -16,8 +18,15 @@ export const CardContainer = styled.div`
    border: solid .2rem rgba(204, 54, 154, 0.904);
   }
 
-  h3 {
-    padding: .75rem;
+  .info {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    
+    h3 {
+      padding: .75rem;
+      width: 12.5rem;
+    }
   }
 
   h4 {

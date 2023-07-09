@@ -32,7 +32,7 @@ export default function Games() {
   const { search } = useContext(SearchContext);
 
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState<boolean>(false);
 
   const controller = new AbortController();
   const signal = controller.signal;
