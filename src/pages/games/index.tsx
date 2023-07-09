@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 import Card from '../../components/card';
 import { useContext, useState } from 'react';
-import { SearchContext } from '../../contexts/searchContext';
+import { SearchContext } from '../../contexts/SearchContext';
 import ProgressBar from '../../components/progressBar';
 import Messenger from '../../components/messenger';
 import FiltersList from '../../components/filtersList';

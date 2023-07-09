@@ -1,6 +1,6 @@
 import { BiSolidStar } from 'react-icons/bi';
 import { useMemo, useState } from 'react';
-import { FavAndRatingContainer } from '../../styles/FavAndRating.styles';
+import { FavAndRatingContainer } from '../../styles/components/FavAndRating.styles';
 
 interface RatingProps {
   count: number;

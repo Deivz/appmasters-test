@@ -1,6 +1,6 @@
 import magnifier from '../../assets/img/Lupa.svg';
 import { useContext } from 'react';
-import { SearchContext } from '../../contexts/searchContext';
+import { SearchContext } from '../../contexts/SearchContext';
 import { SearchBarContainer } from './SearchBar.styles';
 
 export default function SearchBar() {

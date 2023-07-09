@@ -21,14 +21,19 @@ export const device = {
 export const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
-    color: white;
+    color: ${({theme}) =>theme["font-color"]};
     margin: 0;
-    font-family: 'Press Start 2P', cursive;
+    font-family: ${({theme}) =>theme["font-family"]};
     padding: 0;
   }
 
+  html {
+    height: 100%;
+    width: 100%;
+  }
+
   body{
-    background-color: ${props => props.theme["body-bg-color"]};
+    background-color: ${({theme}) =>theme["body-bg-color"]};
   }
 
   main{
@@ -46,9 +51,17 @@ export const GlobalStyle = createGlobalStyle`
     font-size: .75rem;
   }
 
+  input {
+    color: ${({theme}) =>theme["font-color-input"]};
+  }
+
+  label {
+    color: ${({theme}) =>theme["font-color"]};
+  }
+
   .active{
     background-color: rgb(190, 231, 6);
-    border: solid .2rem rgba(204, 54, 154, 0.904);
+    border: solid .2rem ${({theme}) => theme.red};
     border-radius: .5rem;
     color: rgba(42, 3, 216, 0.884);
   }

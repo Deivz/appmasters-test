@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import SearchContextProvider from './contexts/searchContext';
 import DefaultPage from './components/defaultPage';
 import Games from './pages/games';
 import NotFound from './pages/notFound';
+import Login from './pages/login';
+import SearchContextProvider from './contexts/SearchContext';
 
 export default function AppRouter() {
 
@@ -16,6 +17,8 @@ export default function AppRouter() {
           <Routes>
             <Route path='/' element={<DefaultPage />}>
               <Route index element={< Games />} />
+              {/* <Route path='favoritos' element={<NotFound />} /> */}
+              <Route path='auth' element={<Login />} />
               <Route path='*' element={<NotFound />} />
             </Route>
           </Routes>

@@ -6,13 +6,13 @@ export default function NavBar() {
   return (
     <NavBarContainer>
       <li>
-        <NavLink to='/home'>Home</NavLink>
-      </li>
-      <li>
         <NavLink to='/'>Games</NavLink>
       </li>
       <li>
-        <NavLink to='/consoles'>Consoles</NavLink>
+        <NavLink to='/favoritos'>Favoritos</NavLink>
+      </li>
+      <li>
+        <NavLink to='/auth'>Login</NavLink>
       </li>
     </NavBarContainer>
   );
