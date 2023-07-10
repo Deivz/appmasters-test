@@ -18,26 +18,17 @@ export const HeaderContainer = styled.div`
       width: 6rem;
     }
   }
-  
-  .searchBar {
-    width: calc(96% - 6rem);
-  }
 
-  .navBar {
-    align-items: center;
-    display: flex;
-    height: 4rem;
-    justify-content: center;
-    width: 100%;
-  }
-
-  @media ${device.tablet} {
-    .navBar {
-      width: 50%;
+  @media ${device.laptop} {
+    span {
+      order: 1;
     }
-
-    .searchBar {
-      width: 30%;
-    }
+    /* .navBar {
+      align-items: center;
+      display: flex;
+      height: 4rem;
+      justify-content: center;
+      width: 60%;
+    } */
   }
 `

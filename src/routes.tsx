@@ -5,6 +5,7 @@ import Games from './pages/games';
 import NotFound from './pages/notFound';
 import Login from './pages/login';
 import SearchContextProvider from './contexts/SearchContext';
+import Register from './pages/register';
 
 export default function AppRouter() {
 
@@ -19,6 +20,7 @@ export default function AppRouter() {
               <Route index element={< Games />} />
               {/* <Route path='favoritos' element={<NotFound />} /> */}
               <Route path='auth' element={<Login />} />
+              <Route path='register' element={<Register />} />
               <Route path='*' element={<NotFound />} />
             </Route>
           </Routes>

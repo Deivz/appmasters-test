@@ -7,10 +7,20 @@ export const GamesContainer = styled.div`
   width: 96%;
 
   .filter {
-    margin: 1rem 0;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    height: 5rem;
+    justify-content: space-evenly;
   }
 
   @media ${device.tablet} {
+    .filter {
+      align-items: center;
+      flex-direction: row-reverse;
+      justify-content: space-between;
+    }
+
     .content{
       display: grid;
       column-gap: .5rem;

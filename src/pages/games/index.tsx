@@ -7,6 +7,7 @@ import Messenger from '../../components/messenger';
 import FiltersList from '../../components/filtersList';
 import FilterButton from '../../components/filterButton';
 import { GamesContainer, MessagesContainer } from './Games.styles';
+import SearchBar from '../../components/searchBar';
 
 interface GameData {
   id: string;
@@ -120,6 +121,7 @@ export default function Games() {
     <section>
       <GamesContainer>
         <div className='filter'>
+          <SearchBar />
           <FilterButton event={toggleMode} />
         </div>
         <div className='menu'>

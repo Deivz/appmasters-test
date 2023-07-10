@@ -1,16 +1,16 @@
 import { useState } from 'react'
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../../config/firebase'
 import UserForm from '../../components/userForm'
 
-export default function Login() {
+export default function Register() {
 
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const signIn = async () => {
+  const register = async () => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await createUserWithEmailAndPassword(auth, email, password);
       console.log(auth);
     } catch (error) {
       console.error(error);
@@ -19,7 +19,7 @@ export default function Login() {
 
   return (
     <UserForm
-      formAction={signIn}
+      formAction={register}
       email={email}
       onEmailChange={setEmail}
       password={password}

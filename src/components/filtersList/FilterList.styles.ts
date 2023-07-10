@@ -14,6 +14,7 @@ export const FilterListContainer = styled.div<FilterListContainerProps>`
     right: ${({ active }) => active ? '0' : '-90%'};
     top: 0;
     transition: ease-in-out .2s;
+    z-index: 3;
   }
 
   form > span {

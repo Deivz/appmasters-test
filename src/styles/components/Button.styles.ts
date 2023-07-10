@@ -2,7 +2,10 @@ import { styled } from "styled-components";
 import { device } from "../global";
 
 export const ButtonContainer = styled.span`
-
+  a {
+    text-decoration: none;
+  }
+  
   input {
     align-items: center;
     background-color: ${({theme}) => theme.red};
@@ -18,6 +21,10 @@ export const ButtonContainer = styled.span`
     margin: 1rem auto;
     text-decoration: none;
     width: 9.25rem;
+
+    
+
+    
   }
 
   @media ${device.tablet}{
@@ -28,7 +35,7 @@ export const ButtonContainer = styled.span`
 
   @media ${device.laptop} {
     input {
-        width: 10.875rem;
+      width: 10.875rem;
     }
   }
 `

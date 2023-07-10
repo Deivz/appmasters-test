@@ -1,18 +1,21 @@
 import { NavLink } from 'react-router-dom';
 import { NavBarContainer } from './NavBar.styles';
 
+interface NavBarProps {
+  active: boolean;
+}
 
-export default function NavBar() {
+export default function NavBar({ active }: NavBarProps) {
   return (
-    <NavBarContainer>
+    <NavBarContainer active={active}>
       <li>
         <NavLink to='/'>Games</NavLink>
       </li>
       <li>
-        <NavLink to='/favoritos'>Favoritos</NavLink>
+        <NavLink to='/register'>Cadastrar</NavLink>
       </li>
       <li>
-        <NavLink to='/auth'>Login</NavLink>
+        <NavLink to='/favoritos'>Favoritos</NavLink>
       </li>
     </NavBarContainer>
   );
