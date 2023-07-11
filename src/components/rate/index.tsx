@@ -1,6 +1,9 @@
+import { useContext } from 'react';
 import { BiSolidStar } from 'react-icons/bi';
 import { useMemo, useState } from 'react';
 import { FavAndRatingContainer } from '../../styles/components/FavAndRating.styles';
+import { AuthContext } from '../../contexts/AuthContext';
+import { ModalContext } from '../../contexts/ModalContext';
 
 interface RatingProps {
   count: number;
@@ -23,7 +26,11 @@ Rate.defaultProps = {
 
 export default function Rate({ count, rating, color, onRating }: RatingProps) {
 
+  const { user } = useContext(AuthContext);
+
   const [hoverRating, setHoverRating] = useState<number>(0);
+
+  const { setModalIsOpen } = useContext(ModalContext);
 
   const getColor = (index: number): string => {
     if (hoverRating >= index) {
@@ -41,7 +48,14 @@ export default function Rate({ count, rating, color, onRating }: RatingProps) {
         <FavAndRatingContainer
           variant={getColor(index)}
           key={index}
-          onClick={() => onRating(index)}
+          onClick={() => {
+            if (user) {
+              onRating(index);
+            } else {
+              setModalIsOpen(true);
+              setHoverRating(0);
+            }
+          }}
           onMouseEnter={() => setHoverRating(index)}
           onMouseLeave={() => setHoverRating(0)}
         >

@@ -8,6 +8,7 @@ import FiltersList from '../../components/filtersList';
 import FilterButton from '../../components/filterButton';
 import { GamesContainer, MessagesContainer } from './Games.styles';
 import SearchBar from '../../components/searchBar';
+import CustomModal from '../../components/modal';
 
 interface GameData {
   id: string;
@@ -149,6 +150,7 @@ export default function Games() {
           }
         </div>
       </GamesContainer>
+      <CustomModal />
     </section>
   )
 }

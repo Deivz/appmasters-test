@@ -1,25 +1,14 @@
-import { useState } from 'react'
-import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../../config/firebase'
+import { useContext } from 'react'
 import UserForm from '../../components/userForm'
+import { AuthContext } from '../../contexts/AuthContext'
 
 export default function Login() {
 
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-
-  const signIn = async () => {
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      console.log(auth);
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  const { email, password, setEmail, setPassword, login } = useContext(AuthContext);
 
   return (
     <UserForm
-      formAction={signIn}
+      formAction={login}
       email={email}
       onEmailChange={setEmail}
       password={password}

@@ -1,105 +1,80 @@
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { ReactNode, createContext, useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
 import { useNavigate } from "react-router-dom";
+import { auth } from '../config/firebase';
 
 interface AuthContextProviderProps {
   children: ReactNode;
 }
 
-export const AuthContext = createContext();
+interface User {
+  email: string;
+  password?: string;
+}
+
+export const AuthContext = createContext<any>({});
 
 export default function AuthContextProvider({ children }: AuthContextProviderProps) {
 
-  const { data, error, isLoading } = useQuery<Array<GameData>>('data', () => {
+  const navigate = useNavigate();
 
-    const timeOutId = setTimeout(() => {
-      setErrorMessage('O servidor demorou para responder, tente mais tarde');
-      controller.abort();
-    }, 5000);
+  const [email, setEmail] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [user, setUser] = useState<User | null>(null);
 
-    const response = fetch('https://games-test-api-81e9fb0d564a.herokuapp.com/api/data/', {
-      headers: {
-        'dev-email-address': 'carlosd_oliveira@hotmail.com'
-      },
-      signal
-    })
-      .then((response) => {
-        clearTimeout(timeOutId);
+  const login = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      console.log(auth);
+      navigate('/');
+    } catch (error: any) {
+      const errorCode = error.code;
+      let message = '';
 
-        if (response.ok) {
-          return response.json();
-        }
+      switch (errorCode) {
+        case 'auth/user-not-found':
+          message = 'Usuário não encontrado.';
+          break;
+        case 'auth/wrong-password':
+          message = 'Senha incorreta.';
+          break;
 
-        setErrorMessage('O servidor falhou em responder, tente recarregar a página');
-        controller.abort();
-      })
-      .catch((error) => {
-        throw error;
-      });
+        default:
+          message = 'Erro de autenticação.';
+          break;
+      }
 
-    return response;
-  }, {
-    retry: false,
-    staleTime: Infinity,
-    refetchOnWindowFocus: true,
-    refetchOnReconnect: false,
-    refetchIntervalInBackground: false,
-    refetchInterval: false
-  });
+      alert(message);
 
-  // const navigate = useNavigate();
-  // const [user, setUser] = useState('');
-  // const [loading, setLoading] = useState(true);
-  // const [validUser, setValidUser] = useState(true);
-  // const [validPassword, setValidPassword] = useState(true);
+      setErrorMessage(message);
+    }
+  }
 
-  // useEffect(() => {
-  //   const storedUser = localStorage.getItem('user');
+  const logout = async () => {
+    try {
+      await signOut(auth);
+      console.log(auth);
+    } catch (error) {
+      setErrorMessage('Não foi possível realizar o logout, consulte o suporte técnico');
+    }
+  }
 
-  //   if (storedUser) {
-  //     setUser(JSON.parse(storedUser));
-  //   }
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user as User);
+      } else {
+        setUser(null);
+      }
+    });
 
-  //   setLoading(false);
-  // }, []);
+    return () => unsubscribe();
+  }, []);
 
-  // function logar(userData) {
-  //   api
-  //     .get('/users')
-  //     .then((response) => {
-  //       const expectedUser = response.data.find(element => element.email === userData.email);
-  //       const expectedPassword = response.data.find(element => element.senha === userData.senha);
-
-  //       if (expectedUser) {
-  //         setValidUser(true);
-  //         if (expectedPassword) {
-  //           setValidPassword(true);
-  //           setUser(expectedUser);
-  //           localStorage.setItem('user', JSON.stringify({
-  //             id: expectedUser.id,
-  //             email: expectedUser.email
-  //           }));
-  //           navigate('/home');
-  //         } else {
-  //           setValidPassword(false);
-  //         }
-  //       } else {
-  //         setValidUser(false);
-  //       }
-  //     })
-  // }
-
-  // function logout() {
-  //   setUser('');
-  //   localStorage.setItem('user', JSON.stringify({
-  //     id: '',
-  //     email: ''
-  //   }));
-  // }
-
-  // return (
-  //   <AuthContext.Provider value={{ authenticated: !!user, loading, logar, logout, user, setUser, validUser, validPassword }}>
-  //     {children}
-  //   </AuthContext.Provider>
-  // );
+  return (
+    <AuthContext.Provider value={{ errorMessage, email, setEmail, password, setPassword, login, logout, user }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }

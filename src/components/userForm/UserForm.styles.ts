@@ -5,6 +5,6 @@ export const FormContainer = styled.form`
   flex-direction: column;
   justify-content: center;
   margin: 0 auto;
-  min-height: 50vh;
+  min-height: 25rem;
   width: ${({theme}) => theme["container-width"]};
 `
