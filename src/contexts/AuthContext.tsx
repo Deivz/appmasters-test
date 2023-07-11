@@ -12,7 +12,20 @@ interface User {
   password?: string;
 }
 
-export const AuthContext = createContext<any>({});
+interface AuthContextProviderType {
+  errorMessage: string;
+  email: string;
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
+  password: string;
+  modalIsOpen: boolean;
+  setPassword: React.Dispatch<React.SetStateAction<string>>;
+  setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  login: () => void;
+  logout: () => void;
+  user: User | null;
+}
+
+export const AuthContext = createContext<AuthContextProviderType>({} as AuthContextProviderType);
 
 export default function AuthContextProvider({ children }: AuthContextProviderProps) {
 
@@ -22,11 +35,12 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [user, setUser] = useState<User | null>(null);
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+
 
   const login = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      console.log(auth);
       navigate('/');
     } catch (error: any) {
       const errorCode = error.code;
@@ -45,18 +59,18 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
           break;
       }
 
-      alert(message);
-
       setErrorMessage(message);
+      setModalIsOpen(true);
     }
   }
 
   const logout = async () => {
     try {
       await signOut(auth);
-      console.log(auth);
+      navigate('/');
     } catch (error) {
       setErrorMessage('Não foi possível realizar o logout, consulte o suporte técnico');
+      setModalIsOpen(true);
     }
   }
 
@@ -73,7 +87,7 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
   }, []);
 
   return (
-    <AuthContext.Provider value={{ errorMessage, email, setEmail, password, setPassword, login, logout, user }}>
+    <AuthContext.Provider value={{ errorMessage, email, setEmail, password, setPassword, login, logout, user, setModalIsOpen, modalIsOpen }}>
       {children}
     </AuthContext.Provider>
   );

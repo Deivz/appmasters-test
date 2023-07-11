@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
-import { CustomModalContent } from './CustomModal.styles';
+import { CustomModalContent } from '../../styles/components/CustomModal.styles';
 import { ModalContext } from '../../contexts/ModalContext';
 import { ButtonContainer } from '../../styles/components/Button.styles';
 
-export default function CustomModal() {
+export default function LoggedUserModal() {
 
   const navigate = useNavigate();
 
