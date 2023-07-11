@@ -1,7 +1,8 @@
 import { memo, MouseEventHandler, useContext } from 'react';
 import { GenreData } from '../../pages/games';
-import { SearchContext } from '../../contexts/SearchContext';
+
 import { FilterListContainer } from './FilterList.styles';
+import { SearchContext } from '../../contexts/SearchContext';
 
 interface FiltersListProps {
   active: boolean;
