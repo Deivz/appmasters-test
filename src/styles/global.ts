@@ -59,6 +59,15 @@ export const GlobalStyle = createGlobalStyle`
     color: ${({theme}) =>theme["font-color"]};
   }
 
+  input[type="radio"] {
+    display: none;
+  }
+
+  .star {
+    cursor: pointer;
+    transition: color 200ms;
+  }
+
   /* .active{
     background-color: rgb(190, 231, 6);
     border: solid .2rem ${({theme}) => theme.red};

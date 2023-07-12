@@ -12,7 +12,7 @@ import useFilterByGenre from '../../hooks/useFilterByGenre';
 import { useGames } from '../../hooks/useGames';
 
 export interface GameData {
-  id: string;
+  id: number;
   title: string;
   thumbnail: string;
   short_description: string;
@@ -26,7 +26,7 @@ export interface GameData {
 };
 
 export interface GenreData {
-  id: string;
+  id: number;
   title: string;
 }
 
@@ -66,7 +66,7 @@ export default function Games() {
       </MessagesContainer>
     );
   }
-
+console.log(data);
   return (
     <section>
       <GamesContainer>

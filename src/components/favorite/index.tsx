@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { FavAndRatingContainer } from '../../styles/components/FavAndRating.styles';
 import { AuthContext } from '../../contexts/AuthContext';
 import { ModalContext } from '../../contexts/ModalContext';
+import useFavorite from '../../hooks/useFavorites';
 
 interface RatingProps {
   count: number;
@@ -13,6 +14,7 @@ interface RatingProps {
     unfilled: string;
   };
   onFavoriting: (number: number) => void;
+  gameId: number;
 }
 
 Rate.defaultProps = {
@@ -24,10 +26,12 @@ Rate.defaultProps = {
   }
 }
 
-export default function Rate({ count, favoriting, color, onFavoriting }: RatingProps) {
+export default function Rate({ count, favoriting, color, onFavoriting, gameId }: RatingProps) {
 
   const { user } = useContext(AuthContext);
   const { setModalIsOpen } = useContext(ModalContext);
+
+  const { updateOrCreateGame } = useFavorite(gameId);
 
   const [hoverFavoriting, setHoverFavoriting] = useState<number>(0);
 
@@ -49,10 +53,17 @@ export default function Rate({ count, favoriting, color, onFavoriting }: RatingP
           key={index}
           onClick={() => {
             if (user) {
-              onFavoriting(index);
+              if (favoriting) {
+                onFavoriting(0);
+                updateOrCreateGame(0);
+              } else {
+                onFavoriting(index);
+                updateOrCreateGame(index);
+              }
             } else {
               setModalIsOpen(true);
               setHoverFavoriting(0);
+              onFavoriting(0);
             }
           }}
           onMouseEnter={() => setHoverFavoriting(index)}

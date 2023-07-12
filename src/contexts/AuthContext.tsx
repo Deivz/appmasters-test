@@ -37,7 +37,6 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
   const [user, setUser] = useState<User | null>(null);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 
-
   const login = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
