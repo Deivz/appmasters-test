@@ -1,60 +1,37 @@
-// import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GameData, GenreData } from "../pages/games";
-import { getDocs } from "firebase/firestore";
-import { gamesCollectionRef } from "../config/firebase";
-import { useEffect, useState } from "react";
-
-interface StoredGame {
-  id: string;
-  game_id: number;
-  favorited: number;
-  rated: number;
-}
+import { useGames } from "./useGames";
 
 export default function useFilterByGenre() {
 
-  const [gamesList, setGamesList] = useState<Array<StoredGame>>([] as StoredGame[]);
+  const { data } = useGames();
 
-  async function getGamesList() {
-
-    try {
-      const docsArray = await getDocs(gamesCollectionRef);
-      const gamesArray: StoredGame[] = docsArray.docs.map((doc) => ({
-        id: doc.id,
-        game_id: doc.data().game_id,
-        favorited: doc.data().favorited,
-        rated: doc.data().rated,
-      }));
-
-      setGamesList(gamesArray);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  useEffect(() => {
-    getGamesList();
-  }, []);
+  const [filters, setFilters] = useState<GenreData[]>();
 
   const filterByGenre = (games: Array<GameData>): Array<GenreData> => {
-    const genres: Array<GenreData> = [{ id: 0, title: 'Mostrar Todos' }];
+    const genres: Array<GenreData> = [{ value: 0, label: 'Mostrar Todos' }];
 
     for (let game of games) {
-      const hasGenre = genres.find((genre) => genre.title === game.genre);
-      const hasFavAndStar = gamesList.find((storedGame) => storedGame.game_id === game.id);
+      const hasGenre = genres.find((genre) => genre.label === game.genre);
 
       if (!hasGenre) {
-        genres.push({ id: game.id, title: game.genre });
+        genres.push({ value: game.id, label: game.genre });
       }
-      if (hasFavAndStar){
-        Object.assign(game, { favorite: hasFavAndStar.favorited, rated: hasFavAndStar.rated });
-      }
+
     }
 
     return genres;
   }
 
+  useEffect(() => {
+    if(data){
+      setFilters(filterByGenre(data));
+    } else {
+      setFilters([]);
+    }
+  }, [data]);
+
   return {
-    filterByGenre
+    filters
   }
 }

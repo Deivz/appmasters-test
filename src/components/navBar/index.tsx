@@ -15,7 +15,7 @@ export default function NavBar({ active }: NavBarProps) {
         <NavLink to='/register'>Cadastrar</NavLink>
       </li>
       <li>
-        <NavLink to='/favoritos'>Favoritos</NavLink>
+        <NavLink to='/favorites'>Favoritos</NavLink>
       </li>
     </NavBarContainer>
   );

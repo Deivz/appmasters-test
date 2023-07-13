@@ -7,11 +7,11 @@ export const GamesContainer = styled.div`
   width: 96%;
 
   .filter {
+    align-items: flex-start;
     display: flex;
     flex-direction: column;
-    height: 5.5rem;
-    justify-content: space-between;
-    margin: 1rem 0;
+    height: 5rem;
+    justify-content: space-evenly;
   }
 
   @media ${device.tablet} {
@@ -35,6 +35,18 @@ export const GamesContainer = styled.div`
     }
   }
 
+  @media ${device.desktop} {
+    display: flex;
+    justify-content: space-between;
+
+    .filter{
+      display: none;
+    }
+
+    .content{
+      width: 80%;
+    }
+  }
 `
 
 export const MessagesContainer = styled.div`

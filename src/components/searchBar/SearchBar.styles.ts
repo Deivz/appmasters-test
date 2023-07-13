@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import { device } from "../../styles/global";
 
 export const SearchBarContainer = styled.form`
+  height: 2.375rem;
   width: 100%;
   
   input {
@@ -11,13 +12,13 @@ export const SearchBarContainer = styled.form`
     color: white;
     font-size: 0.75rem;
     height: 100%;
-    padding: .5rem 1rem;
+    padding: 0 1rem;
     width: 100%;
   }
 
   i {
     margin-left: -2rem;
-    margin-top: 0.125rem;
+    margin-top: 0.5rem;
     opacity: .9;
     position: absolute;
 
@@ -29,6 +30,10 @@ export const SearchBarContainer = styled.form`
   }
 
   @media ${device.tablet} {
-    width: 80%;
+    width: 65%;
+  }
+  
+  @media ${device.desktop} {
+    width: 57.5rem
   }
 `

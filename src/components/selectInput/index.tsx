@@ -1,10 +1,10 @@
 import Select from 'react-select';
 import { GenreData } from '../../pages/games';
+import { SelectInputContainer } from './SelectInput.styles';
 
 export type SelectInputProps = {
   id: string;
-  options: any;
-  // options: Array<GenreData>;
+  options: Array<GenreData> | undefined;
   placeholder: string;
   value?: any;
   onChange?: any;
@@ -18,7 +18,7 @@ export type SelectOptions = {
 export default function SelectInput({ id, options, placeholder, value, onChange }: SelectInputProps) {
 
   return (
-    <div className='selectInput'>
+    <SelectInputContainer>
       <Select
         onChange={onChange}
         options={options}
@@ -26,6 +26,6 @@ export default function SelectInput({ id, options, placeholder, value, onChange 
         id={id}
         value={value}
       />
-    </div>
+    </SelectInputContainer>
   );
 }

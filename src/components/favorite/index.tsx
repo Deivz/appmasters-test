@@ -7,7 +7,6 @@ import { ModalContext } from '../../contexts/ModalContext';
 import useFavorite from '../../hooks/useFavorites';
 
 interface RatingProps {
-  count: number;
   favoriting: number;
   color: {
     filled: string;
@@ -18,7 +17,6 @@ interface RatingProps {
 }
 
 Rate.defaultProps = {
-  count: 1,
   favoriting: 0,
   color: {
     filled: "red",
@@ -26,7 +24,7 @@ Rate.defaultProps = {
   }
 }
 
-export default function Rate({ count, favoriting, color, onFavoriting, gameId }: RatingProps) {
+export default function Rate({ favoriting, color, onFavoriting, gameId }: RatingProps) {
 
   const { user } = useContext(AuthContext);
   const { setModalIsOpen } = useContext(ModalContext);
@@ -35,45 +33,51 @@ export default function Rate({ count, favoriting, color, onFavoriting, gameId }:
 
   const [hoverFavoriting, setHoverFavoriting] = useState<number>(0);
 
-  const getColor = (index: number): string => {
-    if (hoverFavoriting >= index) {
+  const getColor = (): string => {
+    if (hoverFavoriting > 0) {
       return color.filled;
-    } else if (!hoverFavoriting && favoriting >= index) {
+    } else if (!hoverFavoriting && favoriting > 0) {
       return color.filled;
     }
 
     return color.unfilled;
   }
 
+  const toggleFavoriteAndSend = () => {
+    if (favoriting) {
+      onFavoriting(0);
+      updateOrCreateGame(0);
+    } else {
+      onFavoriting(1);
+      updateOrCreateGame(1);
+    }
+  }
+
+  const showLoginMessageAndReset = () => {
+    setModalIsOpen(true);
+    setHoverFavoriting(0);
+    onFavoriting(0);
+  }
+
   const addFavorite = useMemo(() => {
-    return Array(count).fill(0).map((_, arrayIndex) => arrayIndex + 1).map((index) => {
-      return (
-        <FavAndRatingContainer
-          variant={getColor(index)}
-          key={index}
-          onClick={() => {
-            if (user) {
-              if (favoriting) {
-                onFavoriting(0);
-                updateOrCreateGame(0);
-              } else {
-                onFavoriting(index);
-                updateOrCreateGame(index);
-              }
-            } else {
-              setModalIsOpen(true);
-              setHoverFavoriting(0);
-              onFavoriting(0);
-            }
-          }}
-          onMouseEnter={() => setHoverFavoriting(index)}
-          onMouseLeave={() => setHoverFavoriting(0)}
-        >
-          <BiSolidHeart />
-        </FavAndRatingContainer>
-      );
-    })
-  }, [count, favoriting, hoverFavoriting]);
+    return (
+      <FavAndRatingContainer
+        variant={getColor()}
+        onClick={() => {
+          if (user) {
+            toggleFavoriteAndSend();
+          } else {
+            showLoginMessageAndReset()
+          }
+        }}
+        onMouseEnter={() => setHoverFavoriting(1)}
+        onPointerLeave={() => setHoverFavoriting(0)}
+        onMouseLeave={() => setHoverFavoriting(0)}
+      >
+        <BiSolidHeart />
+      </FavAndRatingContainer>
+    );
+  }, [favoriting, hoverFavoriting]);
 
   return (
     <div>
