@@ -1,9 +1,8 @@
 import Card from '../../components/card';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { SearchContext } from '../../contexts/SearchContext';
 import ProgressBar from '../../components/progressBar';
 import Messenger from '../../components/messenger';
-import FilterButton from '../../components/filterButton';
 import { GamesContainer, MessagesContainer } from './Games.styles';
 import SearchBar from '../../components/searchBar';
 import LoggedUserModal from '../../components/loggedUserModal';
@@ -34,17 +33,9 @@ export default function Games() {
 
   const { search } = useContext(SearchContext);
 
-
-  const [active, setActive] = useState<boolean>(false);
-
   const { data, error, errorMessage, isLoading } = useGames();
 
   const { filters } = useFilterByGenre();
-
-
-  const toggleMode = (): void => {
-    setActive(!active);
-  }
 
   if (isLoading) {
     return (
