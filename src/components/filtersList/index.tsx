@@ -11,7 +11,7 @@ interface FiltersListProps {
 
 const FiltersList = memo(function FilterList({ active, list, onClick }: FiltersListProps) {
 
-  const [search, setSearch] = useState<string>('');
+  const [_, setSearch] = useState<string>('');
 
   return (
     <FilterListContainer active={active}>
