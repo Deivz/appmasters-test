@@ -43,7 +43,7 @@ export default function Games() {
       </MessagesContainer>
     );
   }
-
+// console.log(data)
   if (errorMessage) {
     return (
       <MessagesContainer>

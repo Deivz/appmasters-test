@@ -2,6 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import { GameData } from "../pages/games";
 import { getDocs } from "firebase/firestore";
 import { gamesCollectionRef } from "../config/firebase";
+import { useGames } from "../hooks/useGames";
 
 interface StoredGame {
   id: string;
@@ -24,6 +25,8 @@ interface FavsAndRatingContextType {
 export const FavsAndRatingContext = createContext<FavsAndRatingContextType>({} as FavsAndRatingContextType);
 
 export default function FavsAndRatingContextProvider({ children }: FavsAndRatingContextProps) {
+
+  const { data } = useGames();
 
   const [gamesList, setGamesList] = useState<Array<StoredGame>>([] as StoredGame[]);
   const [favs, setFavs] = useState<GameData[]>([]);
@@ -48,6 +51,16 @@ export default function FavsAndRatingContextProvider({ children }: FavsAndRating
     }
   }
 
+  if(data){
+    for (let game of data) {
+      const hasFavAndStar = gamesList.find((storedGame) => storedGame.game_id === game.id);
+
+      if (hasFavAndStar){
+        Object.assign(game, { favorite: hasFavAndStar.favorited, rate: hasFavAndStar.rated });
+      }
+
+    }
+  }
   useEffect(() => {
     getGamesList();
   }, []);
