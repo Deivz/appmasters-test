@@ -1,6 +1,5 @@
 import Card from '../../components/card';
-import { useContext } from 'react';
-import { SearchContext } from '../../contexts/SearchContext';
+import { useState } from 'react';
 import ProgressBar from '../../components/progressBar';
 import Messenger from '../../components/messenger';
 import { GamesContainer, MessagesContainer } from './Games.styles';
@@ -31,11 +30,11 @@ export interface GenreData {
 
 export default function Games() {
 
-  const { search } = useContext(SearchContext);
-
-  const { data, error, errorMessage, isLoading } = useGames();
-
+  const { data, errorMessage, isLoading } = useGames();
   const { filters } = useFilterByGenre();
+
+  const [search, setSearch] = useState<string>('');
+  const [filter, setFilter] = useState<GenreData>({ value: 0, label: 'Filtros' });
 
   if (isLoading) {
     return (
@@ -53,38 +52,35 @@ export default function Games() {
     );
   }
 
-  if (error) {
-    return (
-      <MessagesContainer>
-        <Messenger message='O servidor não conseguirá responder por agora, tente voltar novamente mais tarde' />
-      </MessagesContainer>
-    );
-  }
-
   return (
     <section>
       <GamesContainer>
         <div className='filter'>
-          <SearchBar />
+          <SearchBar setSearch={setSearch} value={search} />
           <SelectInput
             id='filter'
             placeholder='Filtros'
-            options={filters}
+            options={filters?.sort((a, b) => a.label.localeCompare(b.label))}
+            onChange={setFilter}
+            value={filter}
           />
         </div>
         <div className='content'>
           {
-            (search === undefined)
-              ?
-              data?.map((game: GameData) => <Card gameInfo={game} key={game.id} />)
-              :
-              data?.map((game: GameData) => {
-                if (
-                  game.title.toUpperCase().includes(search.toUpperCase())
-                  || game.genre.toUpperCase().includes(search.toUpperCase())
-                ) {
-                  return <Card gameInfo={game} key={game.id} />
+            data?.
+              filter((game: GameData) => {
+                if(filter.label !== 'Filtros'){
+                  return game.genre.includes(filter.label) ? game : game.title.includes(filter.label);
                 }
+
+                return game.genre.includes('') ? game : game.title.includes(filter.label);
+              })
+              .filter((game: GameData) => {
+                return game.title.toUpperCase().includes(search.toUpperCase())
+                  || game.genre.toUpperCase().includes(search.toUpperCase()) ? game : game.title.toLowerCase().includes(search);
+              })
+              .map((game: GameData) => {
+                return <Card gameInfo={game} key={game.id} />
               })
           }
         </div>

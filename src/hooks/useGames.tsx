@@ -6,6 +6,10 @@ export function useGames() {
 
   const [errorMessage, setErrorMessage] = useState<string>('');
 
+  const errorsArray = [
+    500, 502, 503, 504, 507, 508, 509
+  ]
+
   const controller = new AbortController();
   const signal = controller.signal;
 
@@ -29,7 +33,12 @@ export function useGames() {
           return response.json();
         }
 
-        setErrorMessage('O servidor falhou em responder, tente recarregar a página');
+        if(errorsArray.includes(response.status)){
+          setErrorMessage('O servidor falhou em responder, tente recarregar a página');
+        } else {
+          setErrorMessage('O servidor não conseguirá responder por agora, tente voltar novamente mais tarde');
+        }
+
         controller.abort();
       })
       .catch((error) => {
@@ -40,7 +49,7 @@ export function useGames() {
   }, {
     retry: false,
     staleTime: Infinity,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     refetchIntervalInBackground: false,
     refetchInterval: false

@@ -3,6 +3,7 @@ import { device } from "../../styles/global";
 
 export const SearchBarContainer = styled.form`
   height: 2.375rem;
+  position: relative;
   width: 100%;
   
   input {
@@ -14,6 +15,14 @@ export const SearchBarContainer = styled.form`
     height: 100%;
     padding: 0 1rem;
     width: 100%;
+  }
+
+  .clear {
+    color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    position: absolute;
+    right: 3rem;
+    top: 0.7rem;
   }
 
   i {

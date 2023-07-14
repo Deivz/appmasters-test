@@ -1,16 +1,18 @@
 import magnifier from '../../assets/img/Lupa.svg';
-import { useContext } from 'react';
-import { SearchContext } from '../../contexts/SearchContext';
 import { SearchBarContainer } from './SearchBar.styles';
 
-export default function SearchBar() {
+interface SearchBarProps {
+  value: string;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+}
 
-  const { find, setSearch } = useContext(SearchContext);
+export default function SearchBar({ value, setSearch }: SearchBarProps) {
 
   return (
-    <SearchBarContainer onSubmit={find}>
-      <input type='text' placeholder='Buscar' onChange={(e) => setSearch(e.target.value)} />
-      <i onClick={find} >
+    <SearchBarContainer>
+      <input type='text' placeholder='Buscar' onChange={(e) => setSearch(e.target.value)} value={value} />
+      <span className='clear' onClick={() => setSearch('')}>X</span>
+      <i>
         <img src={magnifier} alt='Botão de pesquisar, ícone de uma lupa' />
       </i>
     </SearchBarContainer>

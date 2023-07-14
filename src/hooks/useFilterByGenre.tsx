@@ -9,7 +9,7 @@ export default function useFilterByGenre() {
   const [filters, setFilters] = useState<GenreData[]>();
 
   const filterByGenre = (games: Array<GameData>): Array<GenreData> => {
-    const genres: Array<GenreData> = [{ value: 0, label: 'Mostrar Todos' }];
+    const genres: Array<GenreData> = [];
 
     for (let game of games) {
       const hasGenre = genres.find((genre) => genre.label === game.genre);

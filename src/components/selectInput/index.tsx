@@ -6,8 +6,8 @@ export type SelectInputProps = {
   id: string;
   options: Array<GenreData> | undefined;
   placeholder: string;
-  value?: any;
-  onChange?: any;
+  value: GenreData;
+  onChange: any;
 }
 
 export type SelectOptions = {
@@ -16,7 +16,6 @@ export type SelectOptions = {
 }
 
 export default function SelectInput({ id, options, placeholder, value, onChange }: SelectInputProps) {
-
   return (
     <SelectInputContainer>
       <Select
@@ -26,6 +25,7 @@ export default function SelectInput({ id, options, placeholder, value, onChange 
         id={id}
         value={value}
       />
+      <span className='clear' onClick={() => onChange({value: 0, label: 'Filtros'})}>X</span>
     </SelectInputContainer>
   );
 }

@@ -1,27 +1,28 @@
-import { memo, MouseEventHandler, useContext } from 'react';
-import { GenreData } from '../../pages/games';
+import { memo, MouseEventHandler, useState } from 'react';
+import { GameData } from '../../pages/games';
 
 import { FilterListContainer } from './FilterList.styles';
-import { SearchContext } from '../../contexts/SearchContext';
 
 interface FiltersListProps {
   active: boolean;
-  list: Array<GenreData>;
+  list: Array<GameData>;
   onClick: MouseEventHandler<HTMLDivElement>;
 }
 
 const FiltersList = memo(function FilterList({ active, list, onClick }: FiltersListProps) {
 
-  const { find, setSearch } = useContext(SearchContext);
+  const [search, setSearch] = useState<string>('');
 
   return (
     <FilterListContainer active={active}>
-      <form onSubmit={find} className={active ? 'isActive' : ''}>
+      {/* <form onSubmit={find} className={active ? 'isActive' : ''}> */}
+      <form className={active ? 'isActive' : ''}>
         <span onClick={onClick}>X</span>
         <ul>
-          {list.map((genre: GenreData) => {
+          {list.map((genre: GameData) => {
             return (
               <li key={genre.id}>
+                {/* <span onClick={() => genre.title === 'Mostrar Todos' ? setSearch('') : setSearch(genre.title)}> */}
                 <span onClick={() => genre.title === 'Mostrar Todos' ? setSearch('') : setSearch(genre.title)}>
                   {genre.title}
                 </span>
