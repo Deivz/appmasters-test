@@ -11,10 +11,10 @@ export const ButtonContainer = styled.div<ButtonContainerProps>`
   border: solid .1rem rgba(255, 255, 255, 0.1);
   cursor: pointer;
   display: flex;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   height: 3.5rem;
   justify-content: space-evenly;
-  width: 10.75rem;
+  width: 9.75rem;
 
   p {
     padding-left: .2rem;

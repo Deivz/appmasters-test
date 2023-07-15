@@ -12,7 +12,8 @@ export const GamesContainer = styled.div`
       flex-wrap: wrap;
       justify-content: space-between;
       margin: 1rem 0;
-      width: 22.5rem;
+      max-width: 23rem;
+      width: 100%;
     }
   }
 
@@ -25,6 +26,7 @@ export const GamesContainer = styled.div`
       .actionButtons {
         align-items: center;
         justify-content: space-between;
+        width: 23rem;
       }
 
       .selectBar{
