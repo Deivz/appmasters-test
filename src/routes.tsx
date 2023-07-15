@@ -18,8 +18,8 @@ export default function AppRouter() {
   return (
     <Router>
       <QueryClientProvider client={queryClient}>
-        <AuthContextProvider>
-          <SearchContextProvider>
+        <SearchContextProvider>
+          <AuthContextProvider>
             <ModalContextProvider>
               <FavsAndRatingContextProvider>
                 <MenuContextProvider>
@@ -34,8 +34,8 @@ export default function AppRouter() {
                 </MenuContextProvider>
               </FavsAndRatingContextProvider>
             </ModalContextProvider>
-          </SearchContextProvider>
-        </AuthContextProvider>
+          </AuthContextProvider>
+        </SearchContextProvider>
       </QueryClientProvider>
     </Router >
   );

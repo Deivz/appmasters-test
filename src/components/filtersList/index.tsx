@@ -15,14 +15,12 @@ const FiltersList = memo(function FilterList({ active, list, onClick }: FiltersL
 
   return (
     <FilterListContainer active={active}>
-      {/* <form onSubmit={find} className={active ? 'isActive' : ''}> */}
       <form className={active ? 'isActive' : ''}>
         <span onClick={onClick}>X</span>
         <ul>
           {list.map((genre: GameData) => {
             return (
               <li key={genre.id}>
-                {/* <span onClick={() => genre.title === 'Mostrar Todos' ? setSearch('') : setSearch(genre.title)}> */}
                 <span onClick={() => genre.title === 'Mostrar Todos' ? setSearch('') : setSearch(genre.title)}>
                   {genre.title}
                 </span>
