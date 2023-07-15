@@ -9,7 +9,7 @@ import { IoMdHeart } from 'react-icons/io'
 import { ImSortAmountAsc, ImSortAmountDesc } from 'react-icons/im'
 import { FavsAndRatingContext } from '../../contexts/GamesContext';
 import ActionButton from '../../components/actionButton';
-import { SearchContext } from '../../contexts/SearchContext';
+import { GameSearch } from '../../contexts/GameSearchContext';
 import SelectInput from '../../components/selectInput';
 
 export interface GameData {
@@ -36,7 +36,7 @@ export interface GenreData {
 export default function Games() {
 
   const { errorMessage, gamesList, isLoading } = useContext(FavsAndRatingContext);
-  const { search } = useContext(SearchContext);
+  const { searchGame } = useContext(GameSearch);
 
   const { filters } = useFilterByGenre();
 
@@ -91,9 +91,9 @@ export default function Games() {
                 return genreArray.length ? genreArray.includes(game.genre) : game
               })
               .filter((game: GameData) => {
-                if (search) {
-                  return game.title.toUpperCase().includes(search.toUpperCase())
-                    || game.genre.toUpperCase().includes(search.toUpperCase()) ? game : game.title.toLowerCase().includes(search);
+                if (searchGame) {
+                  return game.title.toUpperCase().includes(searchGame.toUpperCase())
+                    || game.genre.toUpperCase().includes(searchGame.toUpperCase()) ? game : game.title.toLowerCase().includes(searchGame);
                 } else {
                   return game;
                 }

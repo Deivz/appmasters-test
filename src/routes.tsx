@@ -8,8 +8,8 @@ import Register from './pages/register';
 import AuthContextProvider from './contexts/AuthContext';
 import ModalContextProvider from './contexts/ModalContext';
 import FavsAndRatingContextProvider from './contexts/GamesContext';
-import SearchContextProvider from './contexts/SearchContext';
 import MenuContextProvider from './contexts/MenuContext';
+import GameSearchContextProvider from './contexts/GameSearchContext';
 
 export default function AppRouter() {
 
@@ -18,7 +18,7 @@ export default function AppRouter() {
   return (
     <Router>
       <QueryClientProvider client={queryClient}>
-        <SearchContextProvider>
+        <GameSearchContextProvider>
           <AuthContextProvider>
             <ModalContextProvider>
               <FavsAndRatingContextProvider>
@@ -35,7 +35,7 @@ export default function AppRouter() {
               </FavsAndRatingContextProvider>
             </ModalContextProvider>
           </AuthContextProvider>
-        </SearchContextProvider>
+        </GameSearchContextProvider>
       </QueryClientProvider>
     </Router >
   );

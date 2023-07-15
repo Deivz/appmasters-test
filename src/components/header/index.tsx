@@ -8,13 +8,13 @@ import { ButtonContainer } from '../../styles/components/Button.styles';
 import { AuthContext } from '../../contexts/AuthContext';
 import CustomModal from '../customModal';
 import SearchBar from '../searchBar';
-import { SearchContext } from '../../contexts/SearchContext';
 import { MenuContext } from '../../contexts/MenuContext';
+import { GameSearch } from '../../contexts/GameSearchContext';
 
 export default function Header() {
 
   const { user, logout } = useContext(AuthContext);
-  const { search, setSearch } = useContext(SearchContext);
+  const { searchGame, setSearchGame } = useContext(GameSearch);
   const { active, setActive } = useContext(MenuContext);
 
 
@@ -51,7 +51,7 @@ export default function Header() {
         }
         <Overlay active={active} onClick={ToggleMode}/>
         <MenuButton active={active} event={ToggleMode} />
-        <SearchBar setSearch={setSearch} value={search} />
+        <SearchBar setSearchGame={setSearchGame} value={searchGame} />
         <NavBar active={active} />
       </HeaderContainer>
       <CustomModal
