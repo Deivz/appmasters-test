@@ -1,8 +1,9 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { GameData } from "../pages/games";
 import { getDocs } from "firebase/firestore";
 import { gamesCollectionRef } from "../config/firebase";
 import { useGames } from "../hooks/useGames";
+import { AuthContext } from "./AuthContext";
 
 interface StoredGame {
   id: string;
@@ -17,23 +18,26 @@ interface FavsAndRatingContextProps {
 
 interface FavsAndRatingContextType {
   favs: GameData[];
-  favorites: Array<GameData>;
+  favorites: GameData[];
+  gamesList: GameData[];
   setFavs: React.Dispatch<React.SetStateAction<GameData[]>>;
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
   errorMessage: string;
   isLoading: boolean;
-  data: GameData[] | undefined;
 }
 
 export const FavsAndRatingContext = createContext<FavsAndRatingContextType>({} as FavsAndRatingContextType);
 
 export default function FavsAndRatingContextProvider({ children }: FavsAndRatingContextProps) {
 
+  const { user } = useContext(AuthContext);
+
   const { data, isLoading } = useGames();
 
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [favs, setFavs] = useState<GameData[]>([]);
-  const [gamesList, setGamesList] = useState<Array<StoredGame>>([] as StoredGame[]);
+  const [gamesList, setGamesList] = useState<GameData[]>([]);
+  const [storedGames, setStoredGames] = useState<Array<StoredGame> | null>([] as StoredGame[]);
 
   const favorites: Array<GameData> = [];
 
@@ -48,29 +52,50 @@ export default function FavsAndRatingContextProvider({ children }: FavsAndRating
         rated: doc.data().rated,
       }));
 
-      setGamesList(gamesArray);
+      setStoredGames(gamesArray);
     } catch (error) {
+      setStoredGames(null);
       console.error(error);
     }
-
   }
 
-  if (data) {
-    for (let game of data) {
-      const hasFavAndStar = gamesList.find((storedGame) => storedGame.game_id === game.id);
+  const mergeGamesInfos = () => {
+    console.log('chamou o merge');
 
-      if (hasFavAndStar) {
-        Object.assign(game, { favorite: hasFavAndStar.favorited, rate: hasFavAndStar.rated });
+    for (let game of data) {
+
+      if(storedGames){
+        const storedGame = storedGames.find((storedGame) => storedGame.game_id === game.id);
+  
+        Object.assign(game, { favorite: storedGame?.favorited, rating: storedGame?.rated });
+  
+        setGamesList((previousValue) => [...previousValue, game]);
+
+      } else {
+        Object.assign(game, { favorite: 0, rating: 0 });
+  
+        setGamesList((previousValue) => [...previousValue, game]);
       }
     }
   }
 
   useEffect(() => {
+    if (data) {
+      mergeGamesInfos();
+    }
+
+    return () => {
+      setGamesList([]);
+    }
+
+  }, [data]);
+
+  useEffect(() => {
     getGamesList();
-  }, []);
+  }, [user]);
 
   return (
-    <FavsAndRatingContext.Provider value={{ favs, favorites, setFavs, setErrorMessage, errorMessage, isLoading, data }}>
+    <FavsAndRatingContext.Provider value={{ favs, favorites, gamesList, setFavs, setErrorMessage, errorMessage, isLoading }}>
       {children}
     </FavsAndRatingContext.Provider>
   );

@@ -7,8 +7,9 @@ import Login from './pages/login';
 import Register from './pages/register';
 import AuthContextProvider from './contexts/AuthContext';
 import ModalContextProvider from './contexts/ModalContext';
-import FavsAndRatingContextProvider from './contexts/FavsAndRatingContext';
-// import Favorites from './pages/favorites';
+import FavsAndRatingContextProvider from './contexts/GamesContext';
+import SearchContextProvider from './contexts/SearchContext';
+import MenuContextProvider from './contexts/MenuContext';
 
 export default function AppRouter() {
 
@@ -18,19 +19,22 @@ export default function AppRouter() {
     <Router>
       <QueryClientProvider client={queryClient}>
         <AuthContextProvider>
-          <ModalContextProvider>
-            <FavsAndRatingContextProvider>
-              <Routes>
-                <Route path='/' element={<DefaultPage />}>
-                  <Route index element={< Games />} />
-                  {/* <Route path='favorites' element={<Favorites />} /> */}
-                  <Route path='auth' element={<Login />} />
-                  <Route path='register' element={<Register />} />
-                  <Route path='*' element={<NotFound />} />
-                </Route>
-              </Routes>
-            </FavsAndRatingContextProvider>
-          </ModalContextProvider>
+          <SearchContextProvider>
+            <ModalContextProvider>
+              <FavsAndRatingContextProvider>
+                <MenuContextProvider>
+                  <Routes>
+                    <Route path='/' element={<DefaultPage />}>
+                      <Route index element={< Games />} />
+                      <Route path='auth' element={<Login />} />
+                      <Route path='register' element={<Register />} />
+                      <Route path='*' element={<NotFound />} />
+                    </Route>
+                  </Routes>
+                </MenuContextProvider>
+              </FavsAndRatingContextProvider>
+            </ModalContextProvider>
+          </SearchContextProvider>
         </AuthContextProvider>
       </QueryClientProvider>
     </Router >

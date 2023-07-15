@@ -1,9 +1,7 @@
 import DefaultInput from '../../components/defaultInput'
 import PasswordInput from '../../components/passwordInput'
-import { AuthContext } from '../../contexts/AuthContext'
 import { ButtonContainer } from '../../styles/components/Button.styles'
 import { FormContainer } from './UserForm.styles'
-import { useContext } from 'react'
 
 interface UserFormProps {
   formAction: () => void;
@@ -20,14 +18,9 @@ export default function UserForm({
   formAction, email, onEmailChange, password, onPasswordChange, hasPasswordConfirm = false, passwordConfirm, onPasswordConfirmChange
 }: UserFormProps) {
 
-  const { isSubmitting } = useContext(AuthContext)
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     formAction();
-    // if(!isSubmitting){
-    //   event.currentTarget.submit();
-    // }
   };
 
   return (

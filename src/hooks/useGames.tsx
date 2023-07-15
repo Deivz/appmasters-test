@@ -1,14 +1,12 @@
 import { useQuery } from "react-query";
-import { GameData } from "../pages/games";
 import { useContext } from "react";
-import { FavsAndRatingContext } from "../contexts/FavsAndRatingContext";
+import { FavsAndRatingContext } from "../contexts/GamesContext";
 
 export function useGames() {
 
   const { setErrorMessage } = useContext(FavsAndRatingContext);
 
   const fetchGames = () => {
-
     const errorsArray = [
       500, 502, 503, 504, 507, 508, 509
     ]
@@ -43,23 +41,33 @@ export function useGames() {
         controller.abort();
       })
       .catch((error) => {
-        console.log('caiu aqui')
         throw error;
       });
 
     return response;
   }
 
-  const { data, error, isLoading } = useQuery<Array<GameData> | undefined>('data', fetchGames, {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['data'],
+    queryFn: fetchGames,
     retry: false,
     staleTime: Infinity,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     refetchIntervalInBackground: false,
     refetchInterval: false
-  });
+  })
+
+  // const { data, error, isLoading } = useQuery<Array<GameData> | undefined>('data', fetchGames, {
+  //   retry: false,
+  //   staleTime: Infinity,
+  //   refetchOnWindowFocus: false,
+  //   refetchOnReconnect: false,
+  //   refetchIntervalInBackground: false,
+  //   refetchInterval: false
+  // });
 
   return {
-    data, error, isLoading, fetchGames
+    data, error, isLoading
   }
 }

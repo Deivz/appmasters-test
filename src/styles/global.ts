@@ -37,11 +37,16 @@ export const GlobalStyle = createGlobalStyle`
     overflow: scroll;
   }
 
+  .menuOpen {
+    height: 100%;
+    overflow: hidden;
+  }
+
   main{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    flex-grow: 1;
+    flex-grow: 1; 
   }
 
   h3 {
@@ -69,10 +74,12 @@ export const GlobalStyle = createGlobalStyle`
     transition: color 200ms;
   }
 
-  /* .active:not(input){
-    background-color: rgb(190, 231, 6);
-    border: solid .2rem ${({theme}) => theme.red};
-    border-radius: .5rem;
-    color: rgba(42, 3, 216, 0.884);
-  } */
+  @media ${device.laptop}{
+    .active{
+      background-color: rgb(190, 231, 6);
+      border: solid .2rem ${({theme}) => theme.red};
+      border-radius: .5rem;
+      color: rgba(42, 3, 216, 0.884);
+    }
+  }
 `;

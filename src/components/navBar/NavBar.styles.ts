@@ -32,9 +32,10 @@ export const NavBarContainer = styled.ul<NavBarContainerProps>`
   }
 
   @media ${device.laptop} {
+    align-items: center;
     background-color: transparent;
     display: flex;
-    height: unset;
+    height: 2.375rem;
     justify-content: space-evenly;
     overflow-x: unset;
     padding-top: 0;
@@ -42,7 +43,7 @@ export const NavBarContainer = styled.ul<NavBarContainerProps>`
     right: unset;
     top: unset;
     transition: unset;
-    width: 50rem;
+    width: 30rem;
     z-index: unset;
 
     li {
@@ -51,7 +52,12 @@ export const NavBarContainer = styled.ul<NavBarContainerProps>`
       padding-top: unset;
       
       a {
+        padding: .5rem;
         text-decoration: none;
+      }
+      
+      a:hover:not(.active){
+        color: red;
       }
 
       span {

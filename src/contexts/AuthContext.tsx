@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { auth } from '../config/firebase';
 import { toast } from 'react-toastify';
 
-
 interface AuthContextProviderProps {
   children: ReactNode;
 }
@@ -22,7 +21,6 @@ interface AuthContextProviderType {
   login: () => void;
   logout: () => void;
   user: User | null;
-  isSubmitting: boolean;
 }
 
 export const AuthContext = createContext<AuthContextProviderType>({} as AuthContextProviderType);
@@ -34,13 +32,12 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [user, setUser] = useState<User | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const login = async () => {
     try {
-      setIsSubmitting(true);
       await signInWithEmailAndPassword(auth, email, password);
       navigate('/');
+      window.location.reload();
     } catch (error: any) {
       const errorCode = error.code;
       let message = '';
@@ -68,8 +65,6 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
         progress: undefined,
         theme: "colored",
       });
-    } finally {
-      setIsSubmitting(false);
     }
   }
 
@@ -77,7 +72,7 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
     try {
       await signOut(auth);
 
-      navigate('/');
+      window.location.reload();
     } catch (error) {
       toast.error('Não foi possível realizar o logout, consulte o suporte técnico', {
         position: "top-center",
@@ -105,7 +100,7 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
   }, []);
 
   return (
-    <AuthContext.Provider value={{ email, setEmail, password, setPassword, login, logout, user, isSubmitting }}>
+    <AuthContext.Provider value={{ email, setEmail, password, setPassword, login, logout, user }}>
       {children}
     </AuthContext.Provider>
   );

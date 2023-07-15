@@ -1,8 +1,9 @@
 import { styled } from "styled-components";
-import { device } from "../../styles/global";
 
 export const SelectInputContainer = styled.div`
+  margin: 1rem 0;
   position: relative;
+  width: 100%;
 
   .clear {
     color: rgba(255, 255, 255, 0.4);
@@ -14,14 +15,13 @@ export const SelectInputContainer = styled.div`
 
   div{
     background-color: rgba(0, 0, 0, 0.5);
-  }
 
-  @media ${device.tablet} {
-    max-width: 16.25rem;
-    width: 100%;
-  }
+    .css-13cymwt-control {
+      border: solid 0.1rem rgba(255, 255, 255, 0.3);
+    }
 
-  @media ${device.laptop} {
-    max-width: 25rem;
+    .css-1jqq78o-placeholder{
+      color: white;
+    }
   }
 `

@@ -6,19 +6,30 @@ export const GamesContainer = styled.div`
   max-width: 87.5rem;
   width: 96%;
 
-  .filter {
-    display: flex;
-    flex-direction: column;
-    height: 5.5rem;
-    justify-content: space-between;
-    margin: 1rem 0;
+  .filters {
+    .actionButtons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin: 1rem 0;
+      width: 22.5rem;
+    }
   }
 
   @media ${device.tablet} {
-    .filter {
-      align-items: center;
-      flex-direction: row-reverse;
+    .filters {
+      align-self: center;
+      display: flex;
       justify-content: space-between;
+
+      .actionButtons {
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .selectBar{
+        width: 50%;
+      }
     }
 
     .content{
@@ -32,6 +43,12 @@ export const GamesContainer = styled.div`
   @media ${device.laptop} {
     .content{
       gap: 2.5rem;
+    }
+
+    .filters {
+      .selectBar{
+        width: 54rem;
+      }
     }
   }
 

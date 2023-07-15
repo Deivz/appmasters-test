@@ -7,15 +7,15 @@ import MenuButton from '../menuButton';
 import { ButtonContainer } from '../../styles/components/Button.styles';
 import { AuthContext } from '../../contexts/AuthContext';
 import CustomModal from '../customModal';
+import SearchBar from '../searchBar';
+import { SearchContext } from '../../contexts/SearchContext';
+import { MenuContext } from '../../contexts/MenuContext';
 
-interface HeaderProps {
-  active: boolean
-  setActive: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export default function Header({ active, setActive }: HeaderProps) {
+export default function Header() {
 
   const { user, logout } = useContext(AuthContext);
+  const { search, setSearch } = useContext(SearchContext);
+  const { active, setActive } = useContext(MenuContext);
 
 
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
@@ -51,6 +51,7 @@ export default function Header({ active, setActive }: HeaderProps) {
         }
         <Overlay active={active} onClick={ToggleMode}/>
         <MenuButton active={active} event={ToggleMode} />
+        <SearchBar setSearch={setSearch} value={search} />
         <NavBar active={active} />
       </HeaderContainer>
       <CustomModal

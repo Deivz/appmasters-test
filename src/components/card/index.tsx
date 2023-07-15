@@ -13,12 +13,12 @@ interface CardProps {
   title: string;
   thumbnail: string;
   favorite?: number;
-  rate?: number;
+  rating?: number;
 }
 
 export default function Card({ gameInfo }: Info) {
 
-  const [rating, setRating] = useState<number | undefined>(gameInfo.rate);
+  const [rating, setRating] = useState<number | undefined>(gameInfo.rating);
   const [favoriting, setFavoriting] = useState<number | undefined>(gameInfo.favorite);
 
   return (

@@ -28,6 +28,7 @@ export const ButtonContainer = styled.span<ButtonContainerProps>`
   }
 
   @media ${device.tablet}{
+    order: 1;
     input {
         width: 10.25rem;
     }

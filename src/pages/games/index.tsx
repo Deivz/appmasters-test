@@ -3,11 +3,14 @@ import { useState, useContext } from 'react';
 import ProgressBar from '../../components/progressBar';
 import Messenger from '../../components/messenger';
 import { GamesContainer, MessagesContainer } from './Games.styles';
-import SearchBar from '../../components/searchBar';
 import LoggedUserModal from '../../components/loggedUserModal';
 import useFilterByGenre from '../../hooks/useFilterByGenre';
+import { IoMdHeart } from 'react-icons/io'
+import { ImSortAmountAsc, ImSortAmountDesc } from 'react-icons/im'
+import { FavsAndRatingContext } from '../../contexts/GamesContext';
+import ActionButton from '../../components/actionButton';
+import { SearchContext } from '../../contexts/SearchContext';
 import SelectInput from '../../components/selectInput';
-import { FavsAndRatingContext } from '../../contexts/FavsAndRatingContext';
 
 export interface GameData {
   id: number;
@@ -21,6 +24,8 @@ export interface GameData {
   developer: string;
   release_date: string;
   freetogame_profile_url: string;
+  favorite: number;
+  rating: number;
 };
 
 export interface GenreData {
@@ -30,13 +35,15 @@ export interface GenreData {
 
 export default function Games() {
 
-  const { data, errorMessage, isLoading} = useContext(FavsAndRatingContext);
+  const { errorMessage, gamesList, isLoading } = useContext(FavsAndRatingContext);
+  const { search } = useContext(SearchContext);
 
   const { filters } = useFilterByGenre();
 
-  const [search, setSearch] = useState<string>('');
+  const [favorites, setFavorites] = useState<boolean>(false);
   const [filter, setFilter] = useState<GenreData[]>([]);
   const [genreArray, setGenreArray] = useState<string[]>([]);
+  const [isActive, setIsActive] = useState<boolean>(false);
 
   if (isLoading) {
     return (
@@ -55,32 +62,46 @@ export default function Games() {
   }
 
   return (
-    <section>
+    <section >
       <GamesContainer>
-        <div className='filter'>
-          <SearchBar setSearch={setSearch} value={search} />
-          <SelectInput
-            id='filter'
-            placeholder='Filtros'
-            options={filters?.sort((a, b) => a.label.localeCompare(b.label))}
-            onChange={setFilter}
-            value={filter}
-            filtersArray={setGenreArray}
-          />
+        <div className='filters'>
+          <div className='actionButtons'>
+            <ActionButton icon={isActive ? <ImSortAmountDesc /> : <ImSortAmountAsc />} text='Ordenar' onClick={setIsActive} value={isActive} order={isActive} />
+            <ActionButton icon={<IoMdHeart />} text='Favoritos' onClick={setFavorites} value={favorites} />
+          </div>
+          <div className='selectBar'>
+            <SelectInput
+              id='filter'
+              placeholder='Filtros'
+              options={filters?.sort((a, b) => a.label.localeCompare(b.label))}
+              onChange={setFilter}
+              value={filter}
+              filtersArray={setGenreArray}
+            />
+          </div>
         </div>
         <div className='content'>
           {
-            data?.
-              filter((game: GameData) => {
+            gamesList
+              .sort((gameOne, gameTwo) => isActive ? gameTwo.rating - gameOne.rating : gameOne.rating - gameTwo.rating)
+              .filter((game: GameData) => {
+                return favorites ? game.favorite : game
+              })
+              .filter((game: GameData) => {
                 return genreArray.length ? genreArray.includes(game.genre) : game
               })
               .filter((game: GameData) => {
-                return game.title.toUpperCase().includes(search.toUpperCase())
-                  || game.genre.toUpperCase().includes(search.toUpperCase()) ? game : game.title.toLowerCase().includes(search);
+                if (search) {
+                  return game.title.toUpperCase().includes(search.toUpperCase())
+                    || game.genre.toUpperCase().includes(search.toUpperCase()) ? game : game.title.toLowerCase().includes(search);
+                } else {
+                  return game;
+                }
               })
               .map((game: GameData) => {
                 return <Card gameInfo={game} key={game.id} />
               })
+
           }
         </div>
       </GamesContainer>

@@ -27,6 +27,10 @@ export const MenuButtonContainer = styled.div`
     -webkit-transform: rotate(45deg) translate(-8px, -8px) ;
   }
 
+  @media ${device.tablet} {
+    order: 1;
+  }
+
   @media ${device.laptop} {
     display: none;
   }

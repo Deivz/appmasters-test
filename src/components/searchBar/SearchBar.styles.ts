@@ -39,10 +39,10 @@ export const SearchBarContainer = styled.form`
   }
 
   @media ${device.tablet} {
-    width: 65%;
+    width: 22.5rem;
   }
-  
-  @media ${device.desktop} {
-    width: 57.5rem
+
+  @media ${device.tablet} {
+    width: 25rem;
   }
 `

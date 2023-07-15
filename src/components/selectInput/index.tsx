@@ -33,6 +33,7 @@ export default function SelectInput({ id, options, placeholder, value, onChange,
         id={id}
         value={value}
         isMulti
+        closeMenuOnSelect={false}
       />
     </SelectInputContainer>
   );

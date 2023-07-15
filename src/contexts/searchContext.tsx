@@ -8,7 +8,7 @@ interface SearchContextProps {
 interface SearchContextType {
    find: (event: FormEvent) => void;
    search: string | undefined;
-   setSearch: (value: string | undefined) => void;
+   setSearch: React.Dispatch<React.SetStateAction<string | undefined>>
 }
 
 export const SearchContext = createContext<SearchContextType>({} as SearchContextType);
@@ -20,7 +20,7 @@ export default function SearchContextProvider({ children }: SearchContextProps) 
 
    function find(evento: FormEvent) {
       evento.preventDefault();
-      navigate('/games');
+      navigate('/');
    }
 
    return (
