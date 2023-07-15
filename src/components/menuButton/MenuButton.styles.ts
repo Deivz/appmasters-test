@@ -9,8 +9,8 @@ export const MenuButtonContainer = styled.div`
     box-shadow: 0 .125rem 1.25rem rgba(255, 255, 0, 0.9);
     height: 5px;
     margin: 6px 0;
-    width: 35px;
     transition: 0.4s;
+    width: 35px;
   }
 
   .change .bar1 {

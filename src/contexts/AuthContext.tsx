@@ -22,6 +22,7 @@ interface AuthContextProviderType {
   login: () => void;
   logout: () => void;
   user: User | null;
+  isSubmitting: boolean;
 }
 
 export const AuthContext = createContext<AuthContextProviderType>({} as AuthContextProviderType);
@@ -33,9 +34,11 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [user, setUser] = useState<User | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const login = async () => {
     try {
+      setIsSubmitting(true);
       await signInWithEmailAndPassword(auth, email, password);
       navigate('/');
     } catch (error: any) {
@@ -65,6 +68,8 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
         progress: undefined,
         theme: "colored",
       });
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -100,7 +105,7 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
   }, []);
 
   return (
-    <AuthContext.Provider value={{ email, setEmail, password, setPassword, login, logout, user }}>
+    <AuthContext.Provider value={{ email, setEmail, password, setPassword, login, logout, user, isSubmitting }}>
       {children}
     </AuthContext.Provider>
   );

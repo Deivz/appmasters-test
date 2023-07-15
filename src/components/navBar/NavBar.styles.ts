@@ -9,7 +9,7 @@ export const NavBarContainer = styled.ul<NavBarContainerProps>`
   background-color: rgba(192, 7, 7, .9);
   height: 100vh;
   list-style: none;
-  overflow-x: ${({ active }) => active ? `scroll` : `hidden`};
+  overflow-x: ${({ active }) => active ? `hidden` : `scroll`};
   padding-top: 4rem;
   position: fixed;
   right: ${({ active }) => active ? '0' : '-90%'};

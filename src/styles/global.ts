@@ -34,6 +34,7 @@ export const GlobalStyle = createGlobalStyle`
 
   body{
     background-color: ${({theme}) =>theme["body-bg-color"]};
+    overflow: scroll;
   }
 
   main{

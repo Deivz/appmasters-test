@@ -1,4 +1,4 @@
-import { css, styled } from "styled-components";
+import { styled } from "styled-components";
 import { device } from "../../styles/global";
 
 interface OverlayProps {
@@ -32,16 +32,14 @@ export const HeaderContainer = styled.div`
 `
 
 export const Overlay = styled.div<OverlayProps>`
-  ${({ active }) => active && css`
-      align-items: center;
-      background-color: rgba(0, 0, 0, 0.6);
-      display: flex;
-      height: 100vh;
-      justify-content: center;
-      left: 0;
-      position: absolute;
-      top: 0;
-      width: 100vw;
-      z-index: 3;
-  `}
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  height: 100vh;
+  justify-content: center;
+  overflow-y: hidden;
+  position: fixed;
+  right: ${({ active }) => active ? '0' : '-100%'};
+  top: 0;
+  width: 100vw;
+  z-index: 3;
 `

@@ -10,7 +10,7 @@ export const CardContainer = styled.div`
 
   .pic {
     border-radius: 1rem;
-    border: solid .125rem yellow;
+    border: solid .2rem yellow;
     width: 100%;
   }
 

@@ -8,11 +8,16 @@ import { ButtonContainer } from '../../styles/components/Button.styles';
 import { AuthContext } from '../../contexts/AuthContext';
 import CustomModal from '../customModal';
 
-export default function Header() {
+interface HeaderProps {
+  active: boolean
+  setActive: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function Header({ active, setActive }: HeaderProps) {
 
   const { user, logout } = useContext(AuthContext);
 
-  const [active, setActive] = useState(false);
+
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 
   function ToggleMode() {
