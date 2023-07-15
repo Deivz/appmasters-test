@@ -7,11 +7,12 @@ interface PasswordInputProps {
   label: string;
   id: string;
   placeholder: string;
-  value: string;
+  value: string | undefined;
   onChange: (event: string) => void;
 }
 
 export default function PasswordInput({ label, id, placeholder, onChange, value }: PasswordInputProps) {
+  
   const [showPassword, setShowPassword] = useState(false);
 
   function toggleVisibility() {

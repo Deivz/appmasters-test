@@ -68,7 +68,7 @@ export const GlobalStyle = createGlobalStyle`
     transition: color 200ms;
   }
 
-  .active{
+  .active:not(button){
     background-color: rgb(190, 231, 6);
     border: solid .2rem ${({theme}) => theme.red};
     border-radius: .5rem;

@@ -2,6 +2,8 @@ import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { ReactNode, createContext, useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { auth } from '../config/firebase';
+import { toast } from 'react-toastify';
+
 
 interface AuthContextProviderProps {
   children: ReactNode;
@@ -13,13 +15,10 @@ interface User {
 }
 
 interface AuthContextProviderType {
-  errorMessage: string;
   email: string;
   setEmail: React.Dispatch<React.SetStateAction<string>>;
   password: string;
-  modalIsOpen: boolean;
   setPassword: React.Dispatch<React.SetStateAction<string>>;
-  setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   login: () => void;
   logout: () => void;
   user: User | null;
@@ -32,10 +31,8 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
   const navigate = useNavigate();
 
   const [email, setEmail] = useState<string>('');
-  const [errorMessage, setErrorMessage] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [user, setUser] = useState<User | null>(null);
-  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 
   const login = async () => {
     try {
@@ -58,8 +55,16 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
           break;
       }
 
-      setErrorMessage(message);
-      setModalIsOpen(true);
+      toast.error(message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   }
 
@@ -69,8 +74,16 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
 
       navigate('/');
     } catch (error) {
-      setErrorMessage('Não foi possível realizar o logout, consulte o suporte técnico');
-      setModalIsOpen(true);
+      toast.error('Não foi possível realizar o logout, consulte o suporte técnico', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   }
 
@@ -87,7 +100,7 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
   }, []);
 
   return (
-    <AuthContext.Provider value={{ errorMessage, email, setEmail, password, setPassword, login, logout, user, setModalIsOpen, modalIsOpen }}>
+    <AuthContext.Provider value={{ email, setEmail, password, setPassword, login, logout, user }}>
       {children}
     </AuthContext.Provider>
   );
