@@ -1,19 +1,20 @@
 import { useQuery } from "react-query";
 import { GameData } from "../pages/games";
-import { useState } from "react";
+import { useContext } from "react";
+import { FavsAndRatingContext } from "../contexts/FavsAndRatingContext";
 
 export function useGames() {
 
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  const { setErrorMessage } = useContext(FavsAndRatingContext);
 
-  const errorsArray = [
-    500, 502, 503, 504, 507, 508, 509
-  ]
+  const fetchGames = () => {
 
-  const controller = new AbortController();
-  const signal = controller.signal;
+    const errorsArray = [
+      500, 502, 503, 504, 507, 508, 509
+    ]
 
-  const { data, error, isLoading } = useQuery<Array<GameData>>('data', () => {
+    const controller = new AbortController();
+    const signal = controller.signal;
 
     const timeOutId = setTimeout(() => {
       setErrorMessage('O servidor demorou para responder, tente mais tarde');
@@ -33,7 +34,7 @@ export function useGames() {
           return response.json();
         }
 
-        if(errorsArray.includes(response.status)){
+        if (errorsArray.includes(response.status)) {
           setErrorMessage('O servidor falhou em responder, tente recarregar a página');
         } else {
           setErrorMessage('O servidor não conseguirá responder por agora, tente voltar novamente mais tarde');
@@ -42,11 +43,14 @@ export function useGames() {
         controller.abort();
       })
       .catch((error) => {
+        console.log('caiu aqui')
         throw error;
       });
 
     return response;
-  }, {
+  }
+
+  const { data, error, isLoading } = useQuery<Array<GameData> | undefined>('data', fetchGames, {
     retry: false,
     staleTime: Infinity,
     refetchOnWindowFocus: false,
@@ -56,6 +60,6 @@ export function useGames() {
   });
 
   return {
-    data, error, isLoading, errorMessage
+    data, error, isLoading, fetchGames
   }
 }

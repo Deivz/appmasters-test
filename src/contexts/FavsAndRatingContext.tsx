@@ -18,19 +18,22 @@ interface FavsAndRatingContextProps {
 interface FavsAndRatingContextType {
   favs: GameData[];
   favorites: Array<GameData>;
-  gamesList: StoredGame[];
   setFavs: React.Dispatch<React.SetStateAction<GameData[]>>;
+  setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
+  errorMessage: string;
+  isLoading: boolean;
+  data: GameData[] | undefined;
 }
 
 export const FavsAndRatingContext = createContext<FavsAndRatingContextType>({} as FavsAndRatingContextType);
 
 export default function FavsAndRatingContextProvider({ children }: FavsAndRatingContextProps) {
 
-  const { data } = useGames();
+  const { data, isLoading } = useGames();
 
-  const [gamesList, setGamesList] = useState<Array<StoredGame>>([] as StoredGame[]);
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const [favs, setFavs] = useState<GameData[]>([]);
-  // const [rating, setRating] = useState<GameData[]>([]);
+  const [gamesList, setGamesList] = useState<Array<StoredGame>>([] as StoredGame[]);
 
   const favorites: Array<GameData> = [];
 
@@ -49,29 +52,25 @@ export default function FavsAndRatingContextProvider({ children }: FavsAndRating
     } catch (error) {
       console.error(error);
     }
+
   }
 
-  if(data){
+  if (data) {
     for (let game of data) {
       const hasFavAndStar = gamesList.find((storedGame) => storedGame.game_id === game.id);
 
-      if (hasFavAndStar){
+      if (hasFavAndStar) {
         Object.assign(game, { favorite: hasFavAndStar.favorited, rate: hasFavAndStar.rated });
       }
-
     }
   }
+
   useEffect(() => {
     getGamesList();
   }, []);
 
-  // useEffect(() => {
-  //   getGamesList();
-  // }, [favs]);
-  
-
   return (
-    <FavsAndRatingContext.Provider value={{ favs, favorites, gamesList, setFavs }}>
+    <FavsAndRatingContext.Provider value={{ favs, favorites, setFavs, setErrorMessage, errorMessage, isLoading, data }}>
       {children}
     </FavsAndRatingContext.Provider>
   );

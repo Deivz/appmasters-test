@@ -1,13 +1,13 @@
 import Card from '../../components/card';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import ProgressBar from '../../components/progressBar';
 import Messenger from '../../components/messenger';
 import { GamesContainer, MessagesContainer } from './Games.styles';
 import SearchBar from '../../components/searchBar';
 import LoggedUserModal from '../../components/loggedUserModal';
 import useFilterByGenre from '../../hooks/useFilterByGenre';
-import { useGames } from '../../hooks/useGames';
 import SelectInput from '../../components/selectInput';
+import { FavsAndRatingContext } from '../../contexts/FavsAndRatingContext';
 
 export interface GameData {
   id: number;
@@ -30,11 +30,13 @@ export interface GenreData {
 
 export default function Games() {
 
-  const { data, errorMessage, isLoading } = useGames();
+  const { data, errorMessage, isLoading} = useContext(FavsAndRatingContext);
+
   const { filters } = useFilterByGenre();
 
   const [search, setSearch] = useState<string>('');
-  const [filter, setFilter] = useState<GenreData>({ value: 0, label: 'Filtros' });
+  const [filter, setFilter] = useState<GenreData[]>([]);
+  const [genreArray, setGenreArray] = useState<string[]>([]);
 
   if (isLoading) {
     return (
@@ -43,7 +45,7 @@ export default function Games() {
       </MessagesContainer>
     );
   }
-// console.log(data)
+
   if (errorMessage) {
     return (
       <MessagesContainer>
@@ -63,17 +65,14 @@ export default function Games() {
             options={filters?.sort((a, b) => a.label.localeCompare(b.label))}
             onChange={setFilter}
             value={filter}
+            filtersArray={setGenreArray}
           />
         </div>
         <div className='content'>
           {
             data?.
               filter((game: GameData) => {
-                if(filter.label !== 'Filtros'){
-                  return game.genre.includes(filter.label) ? game : game.title.includes(filter.label);
-                }
-
-                return game.genre.includes('') ? game : game.title.includes(filter.label);
+                return genreArray.length ? genreArray.includes(game.genre) : game
               })
               .filter((game: GameData) => {
                 return game.title.toUpperCase().includes(search.toUpperCase())

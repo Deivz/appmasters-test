@@ -68,10 +68,10 @@ export const GlobalStyle = createGlobalStyle`
     transition: color 200ms;
   }
 
-  /* .active{
+  .active{
     background-color: rgb(190, 231, 6);
     border: solid .2rem ${({theme}) => theme.red};
     border-radius: .5rem;
     color: rgba(42, 3, 216, 0.884);
-  } */
+  }
 `;

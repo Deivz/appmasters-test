@@ -66,6 +66,7 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
   const logout = async () => {
     try {
       await signOut(auth);
+
       navigate('/');
     } catch (error) {
       setErrorMessage('Não foi possível realizar o logout, consulte o suporte técnico');

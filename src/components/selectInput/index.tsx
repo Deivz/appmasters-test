@@ -1,13 +1,15 @@
 import Select from 'react-select';
 import { GenreData } from '../../pages/games';
 import { SelectInputContainer } from './SelectInput.styles';
+import { useEffect } from 'react';
 
 export type SelectInputProps = {
   id: string;
   options: Array<GenreData> | undefined;
   placeholder: string;
-  value: GenreData;
+  value: GenreData[];
   onChange: any;
+  filtersArray: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 export type SelectOptions = {
@@ -15,7 +17,13 @@ export type SelectOptions = {
   label: string
 }
 
-export default function SelectInput({ id, options, placeholder, value, onChange }: SelectInputProps) {
+export default function SelectInput({ id, options, placeholder, value, onChange, filtersArray }: SelectInputProps) {
+
+  useEffect(() =>{
+    const labels = value.map((game: GenreData) => game.label);
+    filtersArray([...labels]);
+  }, [value])
+
   return (
     <SelectInputContainer>
       <Select
@@ -24,8 +32,8 @@ export default function SelectInput({ id, options, placeholder, value, onChange 
         placeholder={placeholder}
         id={id}
         value={value}
+        isMulti
       />
-      <span className='clear' onClick={() => onChange({value: 0, label: 'Filtros'})}>X</span>
     </SelectInputContainer>
   );
 }
