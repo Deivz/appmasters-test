@@ -44,7 +44,7 @@ export default function Header() {
               </NavLink>
             </ButtonContainer>
         }
-        <Overlay active={active} />
+        <Overlay active={active} onClick={ToggleMode}/>
         <MenuButton active={active} event={ToggleMode} />
         <NavBar active={active} />
       </HeaderContainer>
