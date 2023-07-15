@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import logo from '../../assets/img/logo.png';
 import { Link, NavLink } from 'react-router-dom';
 import NavBar from '../navBar';
-import { HeaderContainer } from './Header.styles';
+import { HeaderContainer, Overlay } from './Header.styles';
 import MenuButton from '../menuButton';
 import { ButtonContainer } from '../../styles/components/Button.styles';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -44,6 +44,7 @@ export default function Header() {
               </NavLink>
             </ButtonContainer>
         }
+        <Overlay active={active} />
         <MenuButton active={active} event={ToggleMode} />
         <NavBar active={active} />
       </HeaderContainer>

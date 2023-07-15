@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { device } from "../../styles/global";
 
 export const MenuButtonContainer = styled.div`
-  z-index: 3;
+  z-index: 5;
 
   .bar1, .bar2, .bar3 {
     background-color: rgba(255, 255, 0, 0.7);
