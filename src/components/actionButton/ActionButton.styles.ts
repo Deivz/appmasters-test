@@ -29,14 +29,6 @@ export const ButtonContainer = styled.div<ButtonContainerProps>`
       border: solid .1rem rgba(204, 54, 154, 0.904);
     `
   }
-
-  /* ${({ active, order }) => {
-    if ((order && active) || (order && !active)) {
-      return css`
-        border: solid .1rem rgba(204, 54, 154, 0.904);
-      `}
-  }
-  } */
   
 
   @media ${device.laptop} {

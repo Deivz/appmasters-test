@@ -1,7 +1,6 @@
 import { useContext } from 'react'
 import UserForm from '../../components/userForm'
 import { AuthContext } from '../../contexts/AuthContext'
-import { NavLink } from 'react-router-dom';
 import { LoginContainer } from './Login.styles';
 
 export default function Login() {
@@ -18,7 +17,7 @@ export default function Login() {
         onPasswordChange={setPassword}
       />
       <span>
-        <h3>Ainda não possui cadastro? Cadastre-se <NavLink to='/register'>aqui</NavLink></h3>
+        <h3>Caso ainda não possua cadastro entre com seu e-mail e senha que sua conta será criada!</h3>
       </span>
     </LoginContainer>
   )

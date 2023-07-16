@@ -83,25 +83,25 @@ export default function Games() {
         <div className='content'>
           {
             gamesList
-              .sort((gameOne, gameTwo) => isActive ? gameTwo.rating - gameOne.rating : gameOne.rating - gameTwo.rating)
-              .filter((game: GameData) => {
-                return favorites ? game.favorite : game
-              })
-              .filter((game: GameData) => {
-                return genreArray.length ? genreArray.includes(game.genre) : game
-              })
-              .filter((game: GameData) => {
-                if (searchGame) {
-                  return game.title.toUpperCase().includes(searchGame.toUpperCase())
-                    || game.genre.toUpperCase().includes(searchGame.toUpperCase()) ? game : game.title.toLowerCase().includes(searchGame);
-                } else {
-                  return game;
-                }
-              })
-              .map((game: GameData) => {
-                return <Card gameInfo={game} key={game.id} />
-              })
-
+            .sort((gameOne, gameTwo) => isActive ? gameTwo.rating - gameOne.rating : gameOne.rating - gameTwo.rating)
+            .filter((game: GameData) => {
+              return favorites ? game.favorite : game;
+            })
+            .filter((game: GameData) => {
+              return genreArray.length ? genreArray.includes(game.genre) : game;
+            })
+            .filter((game: GameData) => {
+              if (searchGame) {
+                return game.title.toUpperCase().includes(searchGame.toUpperCase()) ||
+                  game.genre.toUpperCase().includes(searchGame.toUpperCase()) ||
+                  game.title.toLowerCase().includes(searchGame);
+              } else {
+                return game;
+              }
+            })
+            .map((game: GameData) => {
+              return <Card gameInfo={game} key={game.id} />;
+            })
           }
         </div>
       </GamesContainer>

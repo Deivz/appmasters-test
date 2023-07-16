@@ -10,6 +10,7 @@ interface StoredGame {
   game_id: number;
   favorited: number;
   rated: number;
+  user: string;
 }
 
 interface FavsAndRatingContextProps {
@@ -49,6 +50,7 @@ export default function FavsAndRatingContextProvider({ children }: FavsAndRating
         id: doc.id,
         game_id: doc.data().game_id,
         favorited: doc.data().favorited,
+        user: doc.data().user,
         rated: doc.data().rated,
       }));
 
@@ -65,9 +67,12 @@ export default function FavsAndRatingContextProvider({ children }: FavsAndRating
     for (let game of data) {
 
       if(storedGames){
-        const storedGame = storedGames.find((storedGame) => storedGame.game_id === game.id);
+        const storedGame = storedGames.find((storedGame) => (storedGame.game_id === game.id && storedGame.user === user?.email));
   
-        Object.assign(game, { favorite: storedGame?.favorited, rating: storedGame?.rated });
+        Object.assign(game, {
+          favorite: storedGame?.favorited ? storedGame?.favorited : 0,
+          rating: storedGame?.rated ? storedGame?.rated: 0
+        });
   
         setGamesList((previousValue) => [...previousValue, game]);
 

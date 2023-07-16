@@ -1,4 +1,4 @@
-import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { ReactNode, createContext, useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { auth } from '../config/firebase';
@@ -20,6 +20,7 @@ interface AuthContextProviderType {
   setPassword: React.Dispatch<React.SetStateAction<string>>;
   login: () => void;
   logout: () => void;
+  register: () => void;
   user: User | null;
 }
 
@@ -44,7 +45,8 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
 
       switch (errorCode) {
         case 'auth/user-not-found':
-          message = 'Usuário não encontrado.';
+          message = 'E-mail não cadastrado, sua conta será criada!'
+          register();
           break;
         case 'auth/wrong-password':
           message = 'Senha incorreta.';
@@ -87,6 +89,57 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
     }
   }
 
+  const register = async () => {
+
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      toast.success('Conta criada com sucesso!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      navigate('/');
+    } catch (error: any) {
+      const errorCode = error.code;
+      let message = '';
+
+      switch (errorCode) {
+        case 'auth/invalid-email':
+          message = 'E-mail inválido';
+          break;
+
+        case 'auth/missing-password':
+          message = 'Password não pode estar vazio';
+          break;
+
+        case 'auth/weak-password':
+          message = 'Password deve possuir ao menos 6 caracteres';
+          break;
+
+        case 'auth/email-already-in-use':
+          message = 'Usuário já cadastrado';
+          break;
+      }
+
+      toast.error(message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+
+  }
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -100,7 +153,7 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
   }, []);
 
   return (
-    <AuthContext.Provider value={{ email, setEmail, password, setPassword, login, logout, user }}>
+    <AuthContext.Provider value={{ email, setEmail, password, setPassword, login, logout, register, user }}>
       {children}
     </AuthContext.Provider>
   );
