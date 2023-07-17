@@ -7,7 +7,7 @@ import LoggedUserModal from '../../components/loggedUserModal';
 import useFilterByGenre from '../../hooks/useFilterByGenre';
 import { IoMdHeart } from 'react-icons/io'
 import { ImSortAmountAsc, ImSortAmountDesc } from 'react-icons/im'
-import { FavsAndRatingContext } from '../../contexts/GamesContext';
+import { GamesContext } from '../../contexts/GamesContext';
 import ActionButton from '../../components/actionButton';
 import { GameSearch } from '../../contexts/GameSearchContext';
 import SelectInput from '../../components/selectInput';
@@ -35,7 +35,7 @@ export interface GenreData {
 
 export default function Games() {
 
-  const { errorMessage, gamesList, isLoading } = useContext(FavsAndRatingContext);
+  const { errorMessage, gamesList, isLoading } = useContext(GamesContext);
   const { searchGame } = useContext(GameSearch);
 
   const { filters } = useFilterByGenre();
@@ -43,7 +43,7 @@ export default function Games() {
   const [favorites, setFavorites] = useState<boolean>(false);
   const [filter, setFilter] = useState<GenreData[]>([]);
   const [genreArray, setGenreArray] = useState<string[]>([]);
-  const [isActive, setIsActive] = useState<boolean>(false);
+  const [isActive, setIsActive] = useState<boolean>(true);
 
   if (isLoading) {
     return (
@@ -100,7 +100,7 @@ export default function Games() {
               }
             })
             .map((game: GameData) => {
-              return <Card gameInfo={game} key={game.id} />;
+              return <Card game={game} key={game.id} />;
             })
           }
         </div>

@@ -13,23 +13,24 @@ interface StoredGame {
   user: string;
 }
 
-interface FavsAndRatingContextProps {
+interface GamesContextProps {
   children: React.ReactNode;
 }
 
-interface FavsAndRatingContextType {
+interface GamesContextType {
   favs: GameData[];
   favorites: GameData[];
   gamesList: GameData[];
+  getGamesList: () => void;
   setFavs: React.Dispatch<React.SetStateAction<GameData[]>>;
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
   errorMessage: string;
   isLoading: boolean;
 }
 
-export const FavsAndRatingContext = createContext<FavsAndRatingContextType>({} as FavsAndRatingContextType);
+export const GamesContext = createContext<GamesContextType>({} as GamesContextType);
 
-export default function FavsAndRatingContextProvider({ children }: FavsAndRatingContextProps) {
+export default function GamesContextProvider({ children }: GamesContextProps) {
 
   const { user } = useContext(AuthContext);
 
@@ -62,8 +63,6 @@ export default function FavsAndRatingContextProvider({ children }: FavsAndRating
   }
 
   const mergeGamesInfos = () => {
-    console.log('chamou o merge');
-
     for (let game of data) {
 
       if(storedGames){
@@ -93,15 +92,15 @@ export default function FavsAndRatingContextProvider({ children }: FavsAndRating
       setGamesList([]);
     }
 
-  }, [data]);
+  }, [data, storedGames]);
 
   useEffect(() => {
     getGamesList();
   }, [user]);
 
   return (
-    <FavsAndRatingContext.Provider value={{ favs, favorites, gamesList, setFavs, setErrorMessage, errorMessage, isLoading }}>
+    <GamesContext.Provider value={{ favs, favorites, gamesList, getGamesList, setFavs, setErrorMessage, errorMessage, isLoading }}>
       {children}
-    </FavsAndRatingContext.Provider>
+    </GamesContext.Provider>
   );
 }

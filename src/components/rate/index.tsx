@@ -5,6 +5,7 @@ import { FavAndRatingContainer } from '../../styles/components/FavAndRating.styl
 import { AuthContext } from '../../contexts/AuthContext';
 import { ModalContext } from '../../contexts/ModalContext';
 import useRating from '../../hooks/useRating';
+import { GameData } from '../../pages/games';
 
 interface RatingProps {
   count: number;
@@ -14,7 +15,7 @@ interface RatingProps {
     unfilled: string;
   };
   onRating: (number: number) => void;
-  gameId: number;
+  game: GameData;
 }
 
 Rate.defaultProps = {
@@ -26,12 +27,12 @@ Rate.defaultProps = {
   }
 }
 
-export default function Rate({ count, rating, color, onRating, gameId }: RatingProps) {
+export default function Rate({ count, rating, color, onRating, game }: RatingProps) {
 
   const { user } = useContext(AuthContext);
   const { setModalIsOpen } = useContext(ModalContext);
 
-  const { updateOrCreateGame } = useRating(gameId);
+  const { updateOrCreateGame } = useRating(game);
 
   const [hoverRating, setHoverRating] = useState<number>(0);
 
@@ -50,7 +51,7 @@ export default function Rate({ count, rating, color, onRating, gameId }: RatingP
       return (
         <FavAndRatingContainer
           variant={getColor(index)}
-          key={index}
+          key={game.id + index}
           onClick={() => {
             if (user) {
               onRating(index);

@@ -1,10 +1,10 @@
 import { useQuery } from "react-query";
 import { useContext } from "react";
-import { FavsAndRatingContext } from "../contexts/GamesContext";
+import { GamesContext } from "../contexts/GamesContext";
 
 export function useGames() {
 
-  const { setErrorMessage } = useContext(FavsAndRatingContext);
+  const { setErrorMessage } = useContext(GamesContext);
 
   const fetchGames = () => {
     const errorsArray = [
@@ -57,15 +57,6 @@ export function useGames() {
     refetchIntervalInBackground: false,
     refetchInterval: false
   })
-
-  // const { data, error, isLoading } = useQuery<Array<GameData> | undefined>('data', fetchGames, {
-  //   retry: false,
-  //   staleTime: Infinity,
-  //   refetchOnWindowFocus: false,
-  //   refetchOnReconnect: false,
-  //   refetchIntervalInBackground: false,
-  //   refetchInterval: false
-  // });
 
   return {
     data, error, isLoading

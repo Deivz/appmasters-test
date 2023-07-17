@@ -6,9 +6,9 @@ import NotFound from './pages/notFound';
 import Login from './pages/login';
 import AuthContextProvider from './contexts/AuthContext';
 import ModalContextProvider from './contexts/ModalContext';
-import FavsAndRatingContextProvider from './contexts/GamesContext';
 import MenuContextProvider from './contexts/MenuContext';
 import GameSearchContextProvider from './contexts/GameSearchContext';
+import GamesContextProvider from './contexts/GamesContext';
 
 export default function AppRouter() {
 
@@ -20,7 +20,7 @@ export default function AppRouter() {
         <GameSearchContextProvider>
           <AuthContextProvider>
             <ModalContextProvider>
-              <FavsAndRatingContextProvider>
+              <GamesContextProvider>
                 <MenuContextProvider>
                   <Routes>
                     <Route path='/' element={<DefaultPage />}>
@@ -31,7 +31,7 @@ export default function AppRouter() {
                     </Route>
                   </Routes>
                 </MenuContextProvider>
-              </FavsAndRatingContextProvider>
+              </GamesContextProvider>
             </ModalContextProvider>
           </AuthContextProvider>
         </GameSearchContextProvider>
